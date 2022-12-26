@@ -3,23 +3,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Xavier Frontend <%= Rails.application.config.version %> (<%= l(Rails.application.config.version_time) %>) -->
-    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
-    <title>
-      <%= "#{strip_tags(yield(:title))} – " if content_for?(:title) %>
-      Xavier Frontend
-    </title>
-    <%# Specifies the default name of home screen bookmark in iOS %>
-    <meta name="apple-mobile-web-app-title" content="Xavier Frontend">
-
+    <title>XavierFrontend</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <%= yield(:head) %>  </head>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
 
   <body>
     <%= yield %>
