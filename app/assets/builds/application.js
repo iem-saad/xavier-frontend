@@ -6672,7 +6672,6 @@
   var hello_controller_default = class extends Controller {
     connect() {
       this.element.textContent = "Hello World!";
-      console.log("HELLO");
     }
   };
 
