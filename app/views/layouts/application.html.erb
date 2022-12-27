@@ -2,9 +2,9 @@
 <%# to include things like header, footer, and alerts that are common  %>
 <%# to most (but not all) views.                                       %>
 
-<main class="container">
+<div>
   <%= render("shared/flash") %>
   <%= yield %>
-</main>
+</div>
 
 <% parent_layout "base" %>
