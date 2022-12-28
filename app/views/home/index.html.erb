@@ -10,8 +10,12 @@
       <li><a href="#about" class="nav-link scrollto"><i class="bi bi-file-person-fill"></i><span class="pt-1">About</span></a></li>
       <li><a href="#services" class="nav-link scrollto"><i class="bi bi-plugin"></i> <span>Services</span></a></li>
       <li><a href="#contact" class="nav-link scrollto"><i class="bi bi-person-rolodex"></i> <span>Contact</span></a></li>
-      <li><a href="/users/sign_in" class="nav-link scrollto"><i class="bi bi-box-arrow-in-right"></i> <span>Sign In</span></a></li>
-      <li><a href="/users/sign_up" class="nav-link scrollto"><i class="bi bi-journal-text"></i> <span>Sign Up</span></a></li>
+      <% if current_user.present? %>
+        <li><a href="/dashboard" class="nav-link scrollto"><i class="bi bi-terminal-dash"></i> <span>Dashboard</span></a></li>
+      <% else %>
+        <li><a href="/users/sign_in" class="nav-link scrollto"><i class="bi bi-box-arrow-in-right"></i> <span>Sign In</span></a></li>
+        <li><a href="/users/sign_up" class="nav-link scrollto"><i class="bi bi-journal-text"></i> <span>Sign Up</span></a></li>
+      <% end %>
     </ul>
   </nav><!-- .nav-menu -->
 
@@ -40,12 +44,18 @@
 
       <div class="section-title">
         <h2>About</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        <p>Xavier is a toolbox that would test the quality of test suites of DNN by using a
+          range of varied mutation operators increasing the overall accuracy of test suites. In
+          the process of elaborative study on Mutation Testing of DL systems, Xavier will
+          cater multiple model level mutation operators mentioned in literature. Xavier will
+          be able to visualize deep neural networks along with their mutants and the results
+          drawn from mutation testing and their effects and results in depth. It would aid
+          researchers in drawing a comparison between the original and mutated model.</p>
       </div>
 
       <div class="row">
         <div class="col-lg-4">
-          <%= image_tag("profile-img.jpg", class: "img-fluid") %>
+          <%= image_tag("xavier_lg.png", class: "img-fluid") %>
         </div>
         <div class="col-lg-8 pt-4 pt-lg-0 content">
           <h3>UI/UX Designer &amp; Web Developer.</h3>
@@ -294,7 +304,7 @@
     <div class="container" data-aos="fade-up">
 
       <div class="section-title">
-        <h2>Testimonials</h2>
+        <h2>TEAM</h2>
       </div>
 
       <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
@@ -302,9 +312,9 @@
 
           <div class="swiper-slide">
             <div class="testimonial-item">
-              <%= image_tag("testimonials/testimonials-1.jpg", class: "testimonial-img") %>
-              <h3>Saul Goodman</h3>
-              <h4>Ceo &amp; Founder</h4>
+              <%= image_tag("team/draffan.png", class: "testimonial-img") %>
+              <h3>Dr. Affan Rauf</h3>
+              <h4>Supervisor</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                 Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
@@ -315,9 +325,9 @@
 
           <div class="swiper-slide">
             <div class="testimonial-item">
-              <%= image_tag("testimonials/testimonials-2.jpg", class: "testimonial-img") %>
-              <h3>Sara Wilsson</h3>
-              <h4>Designer</h4>
+              <%= image_tag("team/musman.png", class: "testimonial-img") %>
+              <h3>Mr. Usman Ghous</h3>
+              <h4>Co-Supervisor</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                 Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
@@ -328,9 +338,9 @@
 
           <div class="swiper-slide">
             <div class="testimonial-item">
-              <%= image_tag("testimonials/testimonials-3.jpg", class: "testimonial-img") %>
-              <h3>Jena Karlis</h3>
-              <h4>Store Owner</h4>
+              <%= image_tag("team/saad.png", class: "testimonial-img") %>
+              <h3>Saad Abdullah</h3>
+              <h4>FYP Member-I</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                 Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
@@ -341,9 +351,9 @@
 
           <div class="swiper-slide">
             <div class="testimonial-item">
-              <%= image_tag("testimonials/testimonials-4.jpg", class: "testimonial-img") %>
-              <h3>Matt Brandon</h3>
-              <h4>Freelancer</h4>
+              <%= image_tag("team/mahnoor.png", class: "testimonial-img") %>
+              <h3>Mahnoor Abid</h3>
+              <h4>FYP Member-II</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                 Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
@@ -354,9 +364,9 @@
 
           <div class="swiper-slide">
             <div class="testimonial-item">
-              <%= image_tag("testimonials/testimonials-5.jpg", class: "testimonial-img") %>
-              <h3>John Larson</h3>
-              <h4>Entrepreneur</h4>
+              <%= image_tag("team/bilal.png", class: "testimonial-img") %>
+              <h3>Syed Bilal Haider</h3>
+              <h4>FYP Member-III</h4>
               <p>
                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                 Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.

@@ -48,6 +48,8 @@ gem "devise"
 gem 'simple_form'
 gem "slim-rails"
 gem 'foreman', '~> 0.87.2'
+gem 'httparty', '~> 0.20.0'
+gem "pry"
 
 # Use Sass to process CSS
 gem "sassc-rails"
