@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   root "home#index"
   resources :dashboard, only: [:index]
+  get "dashbaord/mutation_testing", to: "dashboard#mutation_testing" 
 end

@@ -12,6 +12,7 @@
       <li><a href="#contact" class="nav-link scrollto"><i class="bi bi-person-rolodex"></i> <span>Contact</span></a></li>
       <% if current_user.present? %>
         <li><a href="/dashboard" class="nav-link scrollto"><i class="bi bi-terminal-dash"></i> <span>Dashboard</span></a></li>
+        <li><a href="/users/sign_out" class="nav-link scrollto"><i class="bi bi-box-arrow-in-right"></i> <span>Sign Out</span></a></li>
       <% else %>
         <li><a href="/users/sign_in" class="nav-link scrollto"><i class="bi bi-box-arrow-in-right"></i> <span>Sign In</span></a></li>
         <li><a href="/users/sign_up" class="nav-link scrollto"><i class="bi bi-journal-text"></i> <span>Sign Up</span></a></li>
