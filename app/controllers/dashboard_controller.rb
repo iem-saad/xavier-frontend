@@ -8,9 +8,9 @@ class DashboardController < ApplicationController
 	end
 
 	def get_model_details
-		return redirect_to dashbaord_mutation_testing_path, alert: "Invalid Model Selected!" unless params[:model_selection][:model_name].present?
+		return redirect_to dashbaord_mutation_testing_path, alert: "Invalid Model Selected!" unless params[:model_name].present?
 
-		@layer_names = @backend_serice.get_layer_names(params[:model_selection][:model_name])
+		@layer_names = @backend_serice.get_layer_names(params[:model_name])
 	end
 
 
