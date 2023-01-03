@@ -1,0 +1,15 @@
+<div class="container-fluid py-4">
+  <h6>Following is model's visualization(LeNet-5):</h6>
+  <div class="row py-4">
+    <div class="col">
+      <%= image_tag("lenet.png", class: "img-fluid", style: "height: 300px;") %>
+    </div>
+    <div class="col">
+      <%= image_tag("lenet_model.png", style: "height: 300px; width: 300px;") %>
+    </div>
+  </div>
+  <%= simple_form_for :layer_name, url: root_path, method: "GET" do |f| %>
+    <%= f.input :layer_name, as: :select, collection: @layer_names, prompt: "Select Layer Name For Mutation" %>
+    <%= f.button :submit %>
+  <% end %>
+</div>

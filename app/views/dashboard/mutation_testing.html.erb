@@ -1,0 +1,8 @@
+<div class="container-fluid py-4">
+  <h4>Hi, <%= current_user.email %></h4>
+  <h6>For the Time Being, The Scope of this app is limited to Lenet-5, but in future we will expand our scope:</h6>
+  <%= simple_form_for :model_selection, url: dashbaord_get_model_details_path, method: "GET" do |f| %>
+    <%= f.input :model_name, as: :select, collection: @model_names, prompt: "Select A Model For Mutation Testing", include_blank: false %>
+    <%= f.button :submit, "Select Model" %>
+  <% end %>
+</div>
