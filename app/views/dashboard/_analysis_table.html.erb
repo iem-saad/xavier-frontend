@@ -33,8 +33,14 @@
               </tr>
               <tr>
                 <td><p class="text-sm font-weight-bold mb-0">Mutated Model</p></td>
-                <% mutated_vals.each do |value| %>
-                  <td><p class="text-sm font-weight-bold mb-0"> <%= value %> </p></td>
+                <% mutated_vals.each_with_index do |value, index| %>
+                  <td><p class="text-sm font-weight-bold mb-0"> <%= value %> 
+                    <% if value < org_vals[index] %>
+                      <i class="px-2 bi bi-arrow-down-square-fill text-danger fw-bold"></i>
+                    <% elsif value > org_vals[index] %>
+                      <i class="px-2 bi bi-arrow-up-square-fill text-success fw-bold"></i>
+                    <% end %>
+                  </p></td>
                 <% end %>
               </tr>
             </tbody>

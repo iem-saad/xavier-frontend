@@ -54,11 +54,17 @@
             <tbody>
               <tr>
                 <td><p class="text-sm font-weight-bold mb-0">Original Model</p></td>
-                <td><p class="text-sm font-weight-bold mb-0"> <%= @org_accuracy %> </p></td>
+                <td><p class="text-sm font-weight-bold mb-0"> <%= @org_accuracy&.first %> </p></td>
               </tr>
               <tr>
                 <td><p class="text-sm font-weight-bold mb-0">Mutated Model</p></td>
-                <td><p class="text-sm font-weight-bold mb-0"> <%= @mutated_accuracy %> </p></td>
+                <td><p class="text-sm font-weight-bold mb-0"> <%= @mutated_accuracy&.first %>
+                  <% if @mutated_accuracy&.first < @org_accuracy&.first %>
+                    <i class="px-2 bi bi-arrow-down-square-fill text-danger fw-bold"></i>
+                  <% elsif @mutated_accuracy&.first > @org_accuracy&.first %>
+                    <i class="px-2 bi bi-arrow-up-square-fill text-success fw-bold"></i>
+                  <% end %>
+                </p></td>
               </tr>
             </tbody>
           </table>
@@ -68,3 +74,4 @@
   </div>
 </div>
 <% end %>
+
