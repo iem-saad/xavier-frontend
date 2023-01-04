@@ -18,5 +18,7 @@ module XavierFrontend
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.available_models = ['lenet5']
+    config.available_operators = ['weight_level']
   end
 end

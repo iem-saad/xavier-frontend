@@ -13,6 +13,9 @@ class DashboardController < ApplicationController
 		@layer_names = @backend_serice.get_layer_names(params[:model_name])
 	end
 
+	def mutation_analysis; end
+	def select_mutation_operator; end
+
 
 	private
 		def initialize_backend_service

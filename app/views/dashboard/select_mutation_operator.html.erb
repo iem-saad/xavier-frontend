@@ -1,47 +1,64 @@
 <style type="text/css">
   .card {
     backdrop-filter: blur(5px);
+    min-width: 35vh;
+    height: 25vh;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.051),
       0px 0px 7.2px rgba(0, 0, 0, 0.073), 0px 0px 13.6px rgba(0, 0, 0, 0.09),
       0px 0px 24.3px rgba(0, 0, 0, 0.107), 0px 0px 45.5px rgba(0, 0, 0, 0.129),
       0px 0px 109px rgba(0, 0, 0, 0.18);
   }
+  .card-0{
+    background-color: rgba(0, 166, 255, 0.3);
+  }
+  .card-1 {
+    background-color: rgba(255, 59, 0, 0.37);
+  }
 </style>
 <div class="container-fluid py-4">
-  <h6>Following is model's visualization(LeNet-5):</h6>
-  <div class="row py-4">
-    <div class="col">
-      <%= image_tag("lenet.png", class: "img-fluid", style: "height: 300px;") %>
-    </div>
-    <div class="col">
-      <%= image_tag("lenet_model.png", style: "height: 300px; width: 300px;") %>
-    </div>
-  </div>
+  <h4>Hi, <%= current_user.email %></h4>
+  <h6>For the Time Being, The Scope of this app is limited to Weight Level Operators, but in future we will expand our scope:</h6>
 </div>
-
 <div class="row">
-  <% @layer_names.each do |layer_name| %>
-    <div class="col-xl-3 col-sm-3 mb-xl-0 p-2">
-      <%= link_to dashbaord_get_model_details_path(model_name: params[:model_name], layer_name: layer_name) do %>
-        <div class="card card-hover" style="background-color: <%= color_according_to_layer(layer_name)%>;">
+  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+    <%= link_to dashbaord_get_model_details_path(model_name: params[:model_name], operator: "weight_level") do %>
+      <div class="card card-0">
+        <div class="card-body p-3">
           <div class="row">
             <div class="col-12">
               <div class="numbers">
                 <h3 class="font-weight-bolder mb-0">
-                  <%= layer_name %>
+                  Weight Level Operators
                 </h3>
               </div>
+              <p>Please Click Here to Apply Weight Level Operators on <%= params[:model_name] %>!</p>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+    <div class="card card-1">
+      <div class="card-body p-3">
+        <div class="row">
+          <div class="col-12">
+            <div class="numbers">
+              <h3 class="font-weight-bolder mb-0">
+               Layer Level Operators
+              </h3>
+            </div>
+            <span class="text-danger text-sm font-weight-bolder">Coming Soon!</span>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
+  </div>
 </div>
 
-<script>
-  var limits = 30.0;
-  $(".card-hover").mousemove(function (e) {
+<script type="text/javascript">
+  var limits = 40.0;
+  $(".card").mousemove(function (e) {
     var rect = e.target.getBoundingClientRect();
     var x = e.clientX - rect.left; //x position within the element.
     var y = e.clientY - rect.top; //y position within the element.
@@ -71,7 +88,7 @@
       .css("left", glarePos + "%");
   });
 
-  $(".card-hover").mouseleave(function (e) {
+  $(".card").mouseleave(function (e) {
     $(".card").css({"box-shadow": "0px 0px 3px rgba(0, 0, 0, 0.051), 0px 0px 7.2px rgba(0, 0, 0, 0.073), 0px 0px 13.6px rgba(0, 0, 0, 0.09), 0px 0px 24.3px rgba(0, 0, 0, 0.107), 0px 0px 45.5px rgba(0, 0, 0, 0.129), 0px 0px 109px rgba(0, 0, 0, 0.18)", "transform": "scale(1.0)"});
     $(".glare").css("left", "100%");
   });

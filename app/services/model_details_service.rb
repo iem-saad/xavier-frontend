@@ -4,6 +4,7 @@ class ModelDetailsService < ApplicationService
 	end
 
 	def get_layer_names(model)
-		['conv2d', 'average_pooling2d', 'conv2d_1', 'average_pooling2d_1', 'flatten', 'dense', 'dense_1', 'dense_2']
+		res = self.class.get("/neuron_layers/#{model}", {})
+		JSON.parse(res)
 	end
 end
