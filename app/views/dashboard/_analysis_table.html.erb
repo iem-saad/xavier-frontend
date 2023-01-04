@@ -1,0 +1,47 @@
+<% if org_vals.present? %>
+<div class="row">
+  <div class="col-11">
+    <div class="card mb-4">
+      <div class="card-header pb-0">
+        <h3><%= title %> Table</h3>
+      </div>
+      <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center justify-content-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">0</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">1</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">2</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">3</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">4</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">5</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">6</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">7</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">8</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">9</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><p class="text-sm font-weight-bold mb-0">Original Model</p></td>
+                <% org_vals.each do |value| %>
+                  <td><p class="text-sm font-weight-bold mb-0"> <%= value %> </p></td>
+                <% end %>
+              </tr>
+              <tr>
+                <td><p class="text-sm font-weight-bold mb-0">Mutated Model</p></td>
+                <% mutated_vals.each do |value| %>
+                  <td><p class="text-sm font-weight-bold mb-0"> <%= value %> </p></td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

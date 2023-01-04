@@ -1,0 +1,70 @@
+<div class="container-fluid py-4">
+  <h4>Hi, <%= current_user.email %></h4>
+  <h6>Following is Tabular Analysis of Both(Mutated & Original Models):</h6>
+</div>
+<div class="mt-4">
+  <%= link_to "Back", specific_model_table_eval_path(model_name: params[:model_name]), class: "btn btn-secondary" %>
+</div>
+
+<% if @org_class_accuracy.present? %>
+  <%= render 'analysis_table', org_vals: @org_class_accuracy, mutated_vals: @mutated_class_accuracy, title: "Class Accuracy" %>
+<% end %>
+
+<% if @org_f1_scores.present? %>
+  <%= render 'analysis_table', org_vals: @org_f1_scores, mutated_vals: @mutated_f1_scores, title: "F1 score" %>
+<% end %>
+
+<% if @org_recalls.present? %>
+  <%= render 'analysis_table', org_vals: @org_recalls, mutated_vals: @mutated_recalls, title: "Recall" %>
+<% end %>
+
+<% if @org_precision.present? %>
+  <%= render 'analysis_table', org_vals: @org_precision, mutated_vals: @mutated_precision, title: "Precision" %>
+<% end %>
+
+<% if @org_auc.present? %>
+  <%= render 'analysis_table', org_vals: @org_auc, mutated_vals: @mutated_auc, title: "AUC" %>
+<% end %>
+
+<% if @org_sensitivity.present? %>
+  <%= render 'analysis_table', org_vals: @org_sensitivity, mutated_vals: @mutated_sensitivity, title: "Sensitivity" %>
+<% end %>
+
+<% if @org_specificity.present? %>
+  <%= render 'analysis_table', org_vals: @org_specificity, mutated_vals: @mutated_specificity, title: "Specificity" %>
+<% end %>
+
+<% if @org_accuracy.present? %>
+  <div class="row">
+  <div class="col-11">
+    <div class="card mb-4">
+      <div class="card-header pb-0">
+        <h6>Overall Accuracy Table</h6>
+      </div>
+      <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center justify-content-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2">Accuracy</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><p class="text-sm font-weight-bold mb-0">Original Model</p></td>
+                <td><p class="text-sm font-weight-bold mb-0"> <%= @org_accuracy %> </p></td>
+              </tr>
+              <tr>
+                <td><p class="text-sm font-weight-bold mb-0">Mutated Model</p></td>
+                <td><p class="text-sm font-weight-bold mb-0"> <%= @mutated_accuracy %> </p></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

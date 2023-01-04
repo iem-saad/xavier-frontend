@@ -63,6 +63,50 @@ class DashboardController < ApplicationController
 		end
 	end
 
+	def selected_tabular_analysis
+		return redirect_to specific_model_table_eval_path(model_name: params[:model_name]), alert: "Please Select Atleast One Method!" unless params[:analysis].present?
+
+		if selected_analysis[:specificity].present?
+			@org_specificity = @backend_serice.get_model_metric(params[:model_name], 'specificity').values.map(&:to_f)
+			@mutated_specificity = @backend_serice.get_model_metric("Mutant", 'specificity').values.map(&:to_f)
+		end
+
+		if selected_analysis[:class_accuracy].present?
+			@org_class_accuracy = @backend_serice.get_model_metric(params[:model_name], 'class-accuracy').values.map(&:to_f)
+			@mutated_class_accuracy = @backend_serice.get_model_metric("Mutant", 'class-accuracy').values.map(&:to_f)
+		end
+
+		if selected_analysis[:f1_score].present?
+			@org_f1_scores = @backend_serice.get_model_metric(params[:model_name], 'f1-score').values.map(&:to_f)
+			@mutated_f1_scores = @backend_serice.get_model_metric("Mutant", 'f1-score').values.map(&:to_f)
+		end
+
+		if selected_analysis[:recall].present?
+			@org_recalls = @backend_serice.get_model_metric(params[:model_name], 'recall').values.map(&:to_f)
+			@mutated_recalls = @backend_serice.get_model_metric("Mutant", 'recall').values.map(&:to_f)
+		end
+
+		if selected_analysis[:precision].present?
+			@org_precision = @backend_serice.get_model_metric(params[:model_name], 'precision').values.map(&:to_f)
+			@mutated_precision = @backend_serice.get_model_metric("Mutant", 'precision').values.map(&:to_f)
+		end
+
+		if selected_analysis[:sensitivity].present?
+			@org_sensitivity = @backend_serice.get_model_metric(params[:model_name], 'sensitivity').values.map(&:to_f)
+			@mutated_sensitivity = @backend_serice.get_model_metric("Mutant", 'sensitivity').values.map(&:to_f)
+		end
+
+		if selected_analysis[:auc].present?
+			@org_auc = @backend_serice.get_model_metric(params[:model_name], 'auc').values.map(&:to_f)
+			@mutated_auc = @backend_serice.get_model_metric("Mutant", 'auc').values.map(&:to_f)
+		end
+
+		if selected_analysis[:accuracy].present?
+			@org_accuracy = @backend_serice.get_model_metric(params[:model_name], 'model-accuracy').values.map(&:to_f)
+			@mutated_accuracy = @backend_serice.get_model_metric("Mutant", 'model-accuracy').values.map(&:to_f)
+		end
+	end
+
 	def get_layer_weights
 		@backend_serice.get_layer_weights(params[:model_name], params[:layer])
 	end
