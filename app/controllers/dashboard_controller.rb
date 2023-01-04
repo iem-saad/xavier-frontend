@@ -16,7 +16,9 @@ class DashboardController < ApplicationController
 	def mutation_analysis; end
 	def select_mutation_operator; end
 	def graphical_analysis; end
+	def model_graphical_analysis; end
 	def tabular_analysis; end
+	def model_tabular_analysis; end
 
 	def get_layer_weights
 		@backend_serice.get_layer_weights(params[:model_name], params[:layer])
