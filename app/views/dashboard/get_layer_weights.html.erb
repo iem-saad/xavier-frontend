@@ -1,0 +1,19 @@
+<div class="container-fluid py-4">
+  <h6>Following are Weights of <%= params[:layer]%>:</h6>
+  <% @kernels.each_with_index do |kernel, index| %>
+    <div class="row py-4">
+      <div class="col-10 text-center" style="background-color: rgb(255, 209, 102);">
+        <h3 class="text-white font-weight-bolder mb-0">Kernel <%= index %></h3>
+      </div>
+    </div>
+    <div class="row">
+      <% kernel.each_with_index do |layer, index| %>
+        <div class="col-10 btn-group me-2" role="group" aria-label="Second group">
+          <% layer.each_with_index do |weight, index| %>
+            <button type="button" class="btn btn-secondary"><%= weight %></button>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

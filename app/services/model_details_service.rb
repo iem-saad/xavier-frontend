@@ -9,8 +9,10 @@ class ModelDetailsService < ApplicationService
 	end
 
 	def get_layer_weights(model, layer)
-		res = self.class.get("/weights/#{model}/#{layer}", {})
-		JSON.parse(res)
+		if layer.include?("conv")
+			res = self.class.get("/kernel-weights/#{model}/#{layer}", {})
+			JSON.parse(res)
+		end
 	end
 
 	def get_model_metric(model, matric)

@@ -108,7 +108,7 @@ class DashboardController < ApplicationController
 	end
 
 	def get_layer_weights
-		@backend_serice.get_layer_weights(params[:model_name], params[:layer])
+		@kernels = @backend_serice.get_layer_weights(params[:model_name], params[:layer])
 	end
 
 	private
