@@ -7,4 +7,9 @@ class ModelDetailsService < ApplicationService
 		res = self.class.get("/neuron_layers/#{model}", {})
 		JSON.parse(res)
 	end
+
+	def get_layer_weights(model, layer)
+		res = self.class.get("/weights/#{model}/#{layer}", {})
+		JSON.parse(res)
+	end
 end
