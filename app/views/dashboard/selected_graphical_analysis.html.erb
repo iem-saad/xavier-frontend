@@ -2,6 +2,9 @@
   <h4>Hi, <%= current_user.email %></h4>
   <h6>Following is Graphical Analysis of Both(Mutated & Original Models):</h6>
 </div>
+<div class="mt-4">
+  <%= link_to "Back", specific_model_graph_eval_path(model_name: params[:model_name]), class: "btn btn-secondary" %>
+</div>
 <div class="row mt-4">
   <% if @org_accuracy.present? %>
   <div class="col-lg-5 mb-lg-0 mb-4">

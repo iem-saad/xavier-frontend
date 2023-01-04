@@ -20,6 +20,8 @@ class DashboardController < ApplicationController
 	end
 
 	def selected_graphical_analysis
+		return redirect_to specific_model_graph_eval_path(model_name: params[:model_name]), alert: "Please Select Atleast One Method!" unless params[:analysis].present?
+
 		if selected_analysis[:specificity].present?
 			@org_specificity = @backend_serice.get_model_metric(params[:model_name], 'specificity').values.map(&:to_f)
 			@mutated_specificity = @backend_serice.get_model_metric("Mutant", 'specificity').values.map(&:to_f)
