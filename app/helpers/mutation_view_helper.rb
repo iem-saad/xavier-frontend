@@ -8,4 +8,8 @@ module MutationViewHelper
 
     return "#FFD166"
   end
+
+  def current_active_tab(url)
+    return "active" if url == request.url
+  end
 end
