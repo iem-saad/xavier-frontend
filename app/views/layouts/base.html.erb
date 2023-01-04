@@ -26,17 +26,19 @@
   </head>
 
   <% if controller_name.eql?("home") || current_user.nil? %>
-     <body>
+    <body>
       <%= yield %>
+      <%= render("shared/footer") %>
     </body>
   <% else %>
     <body class="g-sidenav-show  bg-gray-100">
       <%= render("shared/dashboard_sidebar") %>
       <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <%= yield %>
+        <%= render("shared/footer") %>
       </main>
     </body>
   <% end %>
-  <%= render("shared/footer") %>
+  
  
 </html>
