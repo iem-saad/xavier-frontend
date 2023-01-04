@@ -12,4 +12,9 @@ class ModelDetailsService < ApplicationService
 		res = self.class.get("/weights/#{model}/#{layer}", {})
 		JSON.parse(res)
 	end
+
+	def get_model_metric(model, matric)
+		res = self.class.get("/#{matric}/#{model}", {})
+		JSON.parse(res)
+	end
 end

@@ -16,7 +16,35 @@ class DashboardController < ApplicationController
 	def mutation_analysis; end
 	def select_mutation_operator; end
 	def graphical_analysis; end
-	def model_graphical_analysis; end
+	def model_graphical_analysis
+		@org_specificity = @backend_serice.get_model_metric(params[:model_name], 'specificity').values.map(&:to_f)
+		@mutated_specificity = @backend_serice.get_model_metric("Mutant", 'specificity').values.map(&:to_f)
+
+		@org_class_accuracy = @backend_serice.get_model_metric(params[:model_name], 'class-accuracy').values.map(&:to_f)
+		@mutated_class_accuracy = @backend_serice.get_model_metric("Mutant", 'class-accuracy').values.map(&:to_f)
+
+		@org_f1_scores = @backend_serice.get_model_metric(params[:model_name], 'f1-score').values.map(&:to_f)
+		@mutated_f1_scores = @backend_serice.get_model_metric("Mutant", 'f1-score').values.map(&:to_f)
+
+
+		@org_recalls = @backend_serice.get_model_metric(params[:model_name], 'recall').values.map(&:to_f)
+		@mutated_recalls = @backend_serice.get_model_metric("Mutant", 'recall').values.map(&:to_f)
+
+		@org_precision = @backend_serice.get_model_metric(params[:model_name], 'precision').values.map(&:to_f)
+		@mutated_precision = @backend_serice.get_model_metric("Mutant", 'precision').values.map(&:to_f)
+
+		@org_sensitivity = @backend_serice.get_model_metric(params[:model_name], 'sensitivity').values.map(&:to_f)
+		@mutated_sensitivity = @backend_serice.get_model_metric("Mutant", 'sensitivity').values.map(&:to_f)
+
+		@org_auc = @backend_serice.get_model_metric(params[:model_name], 'auc').values.map(&:to_f)
+		@mutated_auc = @backend_serice.get_model_metric("Mutant", 'auc').values.map(&:to_f)
+
+
+
+		@org_accuracy = @backend_serice.get_model_metric(params[:model_name], 'model-accuracy').values.map(&:to_f)
+		@mutated_accuracy = @backend_serice.get_model_metric("Mutant", 'model-accuracy').values.map(&:to_f)
+	end
+
 	def tabular_analysis; end
 	def model_tabular_analysis; end
 
