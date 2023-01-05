@@ -17,6 +17,7 @@ class DashboardController < ApplicationController
 		return redirect_to dashbaord_mutation_testing_path, alert: "Invalid Model Selected!" unless params[:model_name].present?
 
 		@layer_names = @backend_serice.get_layer_names(params[:model_name])
+		@model_image = @backend_serice.get_model_img(params[:model_name])
 	end
 
 	def selected_graphical_analysis
