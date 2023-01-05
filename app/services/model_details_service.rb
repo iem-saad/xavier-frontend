@@ -10,7 +10,7 @@ class ModelDetailsService < ApplicationService
 
 	def get_layer_weights(model, layer)
 		if layer.include?("conv")
-			res = self.class.get("/kernel-weights/#{model}/#{layer}", {})
+			res = self.class.get("/all-kernel-weights/#{model}/#{layer}", {})
 			JSON.parse(res)
 		end
 	end

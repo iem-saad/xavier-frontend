@@ -111,6 +111,11 @@ class DashboardController < ApplicationController
 		@kernels = @backend_serice.get_layer_weights(params[:model_name], params[:layer])
 	end
 
+	def compare_layer_weights
+		@org_kernels = @backend_serice.get_layer_weights(params[:model_name], params[:layer])
+		@mutated_kernels = @backend_serice.get_layer_weights("Mutant", params[:layer])
+	end
+
 	private
 		def initialize_backend_service
 			@backend_serice ||= ModelDetailsService.new

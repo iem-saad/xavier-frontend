@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "dashbaord/selected_tabular_analysis/:model_name", to: "dashboard#selected_tabular_analysis", as: 'selected_tabular_analysis'
   get "dashbaord/tabular_analysis", to: "dashboard#tabular_analysis" 
   get "dashbaord/tabular_analysis/:model_name", to: "dashboard#model_tabular_analysis" , as: 'specific_model_table_eval'
-  get "dashbaord/get_model_details/:model_name/:operator", to: "dashboard#get_model_details", as: 'dashbaord_get_model_details' 
-  get "dashbaord/get_layer_weights/:model_name/:operator/:layer", to: "dashboard#get_layer_weights", as: 'dashbaord_get_layer_weights' 
+  get "dashbaord/get_model_details/:model_name/:operator", to: "dashboard#get_model_details", as: 'dashbaord_get_model_details'
+  get "dashbaord/get_layer_weights/:model_name/:operator/:layer", to: "dashboard#get_layer_weights", as: 'dashbaord_get_layer_weights'
+  get "dashbaord/compare_layer_weights/:model_name/:operator/:layer", to: "dashboard#compare_layer_weights", as: 'dashbaord_compare_layer_weights'
 end

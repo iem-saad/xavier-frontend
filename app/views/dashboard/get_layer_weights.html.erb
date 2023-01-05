@@ -1,5 +1,12 @@
 <div class="container-fluid py-4">
-  <h6>Following are Weights of <%= params[:layer]%>:</h6>
+  <div class="row">
+    <div class="col">
+      <h6>Following are Weights of <%= params[:layer]%>:</h6>
+    </div>
+    <div class="col">
+      <%= link_to "Compare Mutant & Original Weights", dashbaord_compare_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), class: "btn btn-secondary"%>
+    </div>
+  </div>
   <% @kernels.each_with_index do |kernel, index| %>
     <div class="row py-4">
       <div class="col-10 text-center" style="background-color: rgb(255, 209, 102);">
@@ -10,7 +17,7 @@
       <% kernel.each_with_index do |layer, index| %>
         <div class="col-10 btn-group me-2" role="group" aria-label="Second group">
           <% layer.each_with_index do |weight, index| %>
-            <button type="button" class="btn btn-secondary"><%= weight %></button>
+            <button type="button" class="btn btn-secondary" style="width: 20%;"><%= weight %></button>
           <% end %>
         </div>
       <% end %>

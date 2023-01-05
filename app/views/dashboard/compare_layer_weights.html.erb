@@ -1,0 +1,32 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col">
+      <h6>Following is the Weight Comparison of <%= params[:layer]%>:</h6>
+    </div>
+    <div class="col">
+      <%= link_to "Back", dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), class: "btn btn-secondary"%>
+    </div>
+  </div>
+  <% @org_kernels.each_with_index do |kernel, index_i| %>
+    <div class="row py-4">
+      <div class="col-10 text-center" style="background-color: rgb(255, 209, 102);">
+        <h3 class="text-white font-weight-bolder mb-0">Kernel <%= index_i %></h3>
+      </div>
+    </div>
+    <div class="row">
+      <% kernel.each_with_index do |layer, index_j| %>
+        <div class="col-10 btn-group me-2" role="group" aria-label="Second group">
+          <% layer.each_with_index do |weight, index_k| %>
+            <button type="button" class="btn btn-secondary" style="width: 20%;">
+              <% if weight == @mutated_kernels[index_i][index_j][index_k] %>
+                <span><%= weight %></span>
+              <% else %>
+                <span class="text-decoration-line-through text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= @mutated_kernels[index_i][index_j][index_k] %>"><%= weight %></span>
+              <% end %>
+            </button>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
