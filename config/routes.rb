@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   get "dashbaord/get_model_details/:model_name/:operator", to: "dashboard#get_model_details", as: 'dashbaord_get_model_details'
   get "dashbaord/get_layer_weights/:model_name/:operator/:layer", to: "dashboard#get_layer_weights", as: 'dashbaord_get_layer_weights'
   get "dashbaord/compare_layer_weights/:model_name/:operator/:layer", to: "dashboard#compare_layer_weights", as: 'dashbaord_compare_layer_weights'
+  post "dashbaord/put_layer_weights/:model_name/:operator/:layer", to: "dashboard#put_layer_weights", as: 'dashbaord_put_layer_weights'
 end

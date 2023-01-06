@@ -32,14 +32,14 @@
         <h5 class="modal-title" id="mutationModalLabel">Please Select a Mutation Operator</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <%= form_for :operator_type, url: dashbaord_put_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]) do |f| %>
       <div class="modal-body">
         <h4>Please Choose One Of Following Operators: </h4>
-        <%= form_for :operator_type do |f| %>
           <%= f.hidden_field :modal_kernel %>
           <%= f.hidden_field :modal_row %>
           <%= f.hidden_field :modal_col %>
           <% @operator_list.each do |operator_data| %>
-            <%= f.radio_button :operator, operator_data[0], { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)" } %>
+            <%= f.radio_button :operator, operator_data[0], { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
             <%= f.label :operator, operator_data[1], value: operator_data[0], class: "btn btn-outline-secondary" %>  
           <% end %>
           <br>
@@ -47,12 +47,12 @@
             <p>Please Select Value For Operator:</p>
             <%= f.number_field :op_value, class: "form-control" %>
           </div>
-        <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+      <% end %>
     </div>
   </div>
 </div>

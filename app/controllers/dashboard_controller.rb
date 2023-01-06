@@ -118,6 +118,10 @@ class DashboardController < ApplicationController
 		@mutated_kernels = @backend_serice.get_layer_weights("Mutant", params[:layer])
 	end
 
+	def put_layer_weights
+		return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error Operator Value Not Selected!" if operator_params[:operator].eql?("change-neuron") && !operator_params[:op_value].present?
+	end
+
 	private
 		def initialize_backend_service
 			@backend_serice ||= ModelDetailsService.new
@@ -125,5 +129,9 @@ class DashboardController < ApplicationController
 
 		def selected_analysis
 			params.require(:analysis).permit(:specificity, :class_accuracy, :f1_score, :recall, :precision, :auc, :sensitivity, :accuracy)
+		end
+
+		def operator_params
+			params.require(:operator_type).permit(:modal_kernel, :modal_row, :modal_col, :operator, :op_value)
 		end
 end
