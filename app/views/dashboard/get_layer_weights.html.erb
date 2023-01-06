@@ -7,20 +7,74 @@
       <%= link_to "Compare Mutant & Original Weights", dashbaord_compare_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), class: "btn btn-secondary"%>
     </div>
   </div>
-  <% @kernels.each_with_index do |kernel, index| %>
+  <% @kernels.each_with_index do |kernel, index_i| %>
     <div class="row py-4">
       <div class="col-10 text-center" style="background-color: rgb(255, 209, 102);">
-        <h3 class="text-white font-weight-bolder mb-0">Kernel <%= index %></h3>
+        <h3 class="text-white font-weight-bolder mb-0">Kernel <%= index_i %></h3>
       </div>
     </div>
     <div class="row">
-      <% kernel.each_with_index do |layer, index| %>
+      <% kernel.each_with_index do |layer, index_j| %>
         <div class="col-10 btn-group me-2" role="group" aria-label="Second group">
-          <% layer.each_with_index do |weight, index| %>
-            <button type="button" class="btn btn-secondary" style="width: 20%;"><%= weight %></button>
+          <% layer.each_with_index do |weight, index_k| %>
+            <button type="button" class="btn btn-secondary" style="width: 20%;" onclick="open_mutation_modal(this);" data-kernel="<%= index_i %>" data-row=" <%= index_j %> " data-col="<%= index_k %>"><%= weight %></button>
           <% end %>
         </div>
       <% end %>
     </div>
   <% end %>
 </div>
+
+<div class="modal fade" id="mutationModal" tabindex="-1" aria-labelledby="mutationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mutationModalLabel">Please Select a Mutation Operator</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Please Choose One Of Following Operators: </h4>
+        <%= form_for :operator_type do |f| %>
+          <%= f.hidden_field :modal_kernel %>
+          <%= f.hidden_field :modal_row %>
+          <%= f.hidden_field :modal_col %>
+          <% @operator_list.each do |operator_data| %>
+            <%= f.radio_button :operator, operator_data[0], { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)" } %>
+            <%= f.label :operator, operator_data[1], value: operator_data[0], class: "btn btn-outline-secondary" %>  
+          <% end %>
+          <br>
+          <div class="row d-none" id = "operator_type_value"> 
+            <p>Please Select Value For Operator:</p>
+            <%= f.number_field :op_value, class: "form-control" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  function open_mutation_modal(event) {
+    kernel = event.dataset.kernel;
+    row = event.dataset.row;
+    col = event.dataset.col;
+    $('#operator_type_modal_kernel').val(kernel);
+    $('#operator_type_modal_row').val(row);
+    $('#operator_type_modal_col').val(col);
+    $('#mutationModal').modal('toggle');
+  }
+
+  function show_field_after_clicking_operator(event) {
+    if (event.value == "change-neuron") {
+      $('#operator_type_value').removeClass("d-none");
+    }
+    else {
+      $('#operator_type_value').addClass("d-none");
+    }
+  }  
+</script>

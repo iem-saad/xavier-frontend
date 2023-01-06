@@ -23,4 +23,9 @@ class ModelDetailsService < ApplicationService
     res = self.class.get("/#{matric}/#{model}", {})
     JSON.parse(res)
   end
+
+  def get_operator_names(type)
+    res = self.class.get("/operators-list/#{type}", {})
+    JSON.parse(res)
+  end
 end

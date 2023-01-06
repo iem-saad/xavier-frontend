@@ -110,6 +110,7 @@ class DashboardController < ApplicationController
 
 	def get_layer_weights
 		@kernels = @backend_serice.get_layer_weights(params[:model_name], params[:layer])
+		@operator_list = @backend_serice.get_operator_names(1)
 	end
 
 	def compare_layer_weights
