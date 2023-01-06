@@ -119,7 +119,11 @@ class DashboardController < ApplicationController
 	end
 
 	def put_layer_weights
-		return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error Operator Value Not Selected!" if operator_params[:operator].eql?("change-neuron") && !operator_params[:op_value].present?
+		return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error! Operator Value Not Selected!" if operator_params[:operator].eql?("change-neuron") && !operator_params[:op_value].present?
+		return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error! Invalid Operator Selected!" if !operator_params[:modal_row].present? || !operator_params[:modal_col].present? || !operator_params[:modal_kernel].present?
+
+		response = @backend_serice.generate_mutant(params[:model_name], params[:layer], operator_params[:operator], operator_params[:op_value], operator_params[:modal_row], operator_params[:modal_col], operator_params[:modal_kernel])
+		return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), notice: response.values[0]
 	end
 
 	private

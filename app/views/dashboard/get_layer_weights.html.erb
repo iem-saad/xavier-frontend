@@ -17,7 +17,7 @@
       <% kernel.each_with_index do |layer, index_j| %>
         <div class="col-10 btn-group me-2" role="group" aria-label="Second group">
           <% layer.each_with_index do |weight, index_k| %>
-            <button type="button" class="btn btn-secondary" style="width: 20%;" onclick="open_mutation_modal(this);" data-kernel="<%= index_i %>" data-row=" <%= index_j %> " data-col="<%= index_k %>"><%= weight %></button>
+            <button type="button" class="btn btn-secondary" style="width: 20%;" onclick="open_mutation_modal(this);" data-kernel="<%= index_i %>" data-row="<%= index_j %>" data-col="<%= index_k %>"><%= weight %></button>
           <% end %>
         </div>
       <% end %>

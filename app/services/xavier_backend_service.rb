@@ -28,4 +28,13 @@ class XavierBackendService < ApplicationService
     res = self.class.get("/operators-list/#{type}", {})
     JSON.parse(res)
   end
+
+  def generate_mutant(model, layer, operator, op_value, row, col, kernel)
+    if operator.eql?("change-neuron")
+      endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}/#{op_value}"
+    else
+      endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}"
+    end
+    response = self.class.put(endpoint,headers: { "Content-Type" => 'application/json' })
+  end
 end
