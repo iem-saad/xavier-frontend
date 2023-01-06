@@ -2,6 +2,7 @@
 import { Turbo } from "@hotwired/turbo-rails"
 Turbo.session.drive = false
 import "./controllers"
+import './add_jquery'
 // import "./custom/template.js"
 // import "./vendor/aos/aos.css"
 // import "./vendor/aos/aos.js"
