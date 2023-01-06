@@ -1,4 +1,4 @@
-class ModelDetailsService < ApplicationService
+class XavierBackendService < ApplicationService
   def get_model_names
     ['lenet5']
   end

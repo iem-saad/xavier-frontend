@@ -124,7 +124,7 @@ class DashboardController < ApplicationController
 
 	private
 		def initialize_backend_service
-			@backend_serice ||= ModelDetailsService.new
+			@backend_serice ||= XavierBackendService.new
 		end
 
 		def selected_analysis
