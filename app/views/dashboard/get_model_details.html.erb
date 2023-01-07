@@ -1,6 +1,8 @@
 <style type="text/css">
   .card {
     backdrop-filter: blur(5px);
+    min-width: 35vh;
+    height: 10vh;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.051),
       0px 0px 7.2px rgba(0, 0, 0, 0.073), 0px 0px 13.6px rgba(0, 0, 0, 0.09),
       0px 0px 24.3px rgba(0, 0, 0, 0.107), 0px 0px 45.5px rgba(0, 0, 0, 0.129),
@@ -20,6 +22,7 @@
 </div>
 
 <div class="row">
+  <h6>Following are the layers which are currenlty supported for <%= params[:operator] %> Mutations on <%= params[:model_name] %>:</h6>
   <% @layer_names.each do |layer_name| %>
     <div class="col-xl-3 col-sm-3 mb-xl-0 p-2">
       <%= link_to dashbaord_get_layer_weights_path(model_name: params[:model_name], layer: layer_name) do %>
@@ -27,7 +30,7 @@
           <div class="row">
             <div class="col-12">
               <div class="numbers">
-                <h3 class="font-weight-bolder mb-0">
+                <h3 class="font-weight-bolder p-3">
                   <%= layer_name %>
                 </h3>
               </div>
