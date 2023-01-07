@@ -1,0 +1,49 @@
+<main class="main-content  mt-0">
+  <section>
+    <div class="">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+            <div class="card card-plain mt-8">
+              <div class="card-header pb-0 text-left bg-transparent">
+                <%= image_tag("xavier.png", class: "img-fluid", style: "height: 150px; width: 150px;") %>
+                <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
+                <p class="mb-0">Enter your email and password to sign in</p>
+              </div>
+              <div class="card-body">
+
+                <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false } ) do |f| %>
+
+                  <label>Email</label>
+                  <div class="mb-3">
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+                  </div>
+                  <label>Password</label>
+                  <div class="mb-3">
+                    <%= f.password_field :password, autocomplete: "current-password", class:"form-control" %>
+                  </div>
+                  <% if devise_mapping.rememberable? %>
+                    <div class="form-check form-switch">
+                      <%= f.check_box :remember_me, class: "form-check-input" %>
+                      <%= f.label :remember_me, class: "form-check-label" %>
+                    </div>
+                  <% end  %>
+                  <div class="text-center">
+                    <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                  </div>
+                <% end %>
+              </div>
+              <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                <%= render "devise/shared/links" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-5 col-xl-4 ty-26">
+            <%= image_tag("login bg.png", class: "img-fluid", style: "padding-top: 30%;") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
