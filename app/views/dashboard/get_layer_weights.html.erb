@@ -1,12 +1,13 @@
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col">
-      <h6>Following are Weights of <%= params[:layer]%>:</h6>
+      <h6>Following are Trainable Weights of <%= params[:layer]%>:</h6>
     </div>
     <div class="col">
       <%= link_to "Compare Mutant & Original Weights", dashbaord_compare_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), class: "btn btn-secondary"%>
     </div>
   </div>
+  <h5>Please Select a Neuron on which you want to apply mutation operator:</h5>
   <% @kernels.each_with_index do |kernel, index_i| %>
     <div class="row py-4">
       <div class="col-10 text-center" style="background-color: rgb(255, 209, 102);">
@@ -45,12 +46,12 @@
           <br>
           <div class="row d-none" id = "operator_type_value"> 
             <p>Please Select Value For Operator:</p>
-            <%= f.number_field :op_value, class: "form-control" %>
+            <%= f.number_field :op_value, class: "form-control", step: "any", max: 999999 %>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Generate Mutant</button>
       </div>
       <% end %>
     </div>

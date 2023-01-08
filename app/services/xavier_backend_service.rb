@@ -31,7 +31,8 @@ class XavierBackendService < ApplicationService
 
   def generate_mutant(model, layer, operator, op_value, row, col, kernel)
     if operator.eql?("change-neuron")
-      endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}/#{op_value}"
+      # binding.pry
+      endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}/#{op_value.to_f}"
     else
       endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}"
     end
