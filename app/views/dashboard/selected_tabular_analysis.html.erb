@@ -26,12 +26,16 @@
   <%= render 'analysis_table', org_vals: @org_auc, mutated_vals: @mutated_auc, title: "AUC" %>
 <% end %>
 
-<% if @org_sensitivity.present? %>
+<% if @org_sensitivity.present? && false %>
   <%= render 'analysis_table', org_vals: @org_sensitivity, mutated_vals: @mutated_sensitivity, title: "Sensitivity" %>
 <% end %>
 
 <% if @org_specificity.present? %>
   <%= render 'analysis_table', org_vals: @org_specificity, mutated_vals: @mutated_specificity, title: "Specificity" %>
+<% end %>
+
+<% if @org_fbeta.present? %>
+  <%= render 'analysis_table', org_vals:@org_fbeta, mutated_vals: @mutated_fbeta, title: "Specificity" %>
 <% end %>
 
 <% if @org_accuracy.present? %>
