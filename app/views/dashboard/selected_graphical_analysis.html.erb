@@ -129,6 +129,26 @@
   <% end %>
 </div>
 
+
+
+
+<div class="row mt-4">
+  <% if @org_fbeta.present? %>
+  <div class="col-lg-6">
+    <div class="card z-index-2">
+      <div class="card-header pb-0">
+        <h3>F-Beta Comparison Of Both Models.</h3>
+      </div>
+      <div class="card-body p-3">
+        <div class="chart">
+          <canvas id="chart-line-fbeta" class="chart-canvas" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+
 <script>
 function getChartOptions() {
     const chartBarOptions = {
@@ -570,5 +590,55 @@ function getChartOptions() {
     },
     options: getChartOptions(),
   });
+  <% end %>
+
+  <% if @org_fbeta.present? %>
+    var ctx9 = document.getElementById("chart-line-fbeta").getContext("2d");
+
+    var gradientStroke1 = ctx9.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+
+    var gradientStroke2 = ctx9.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+    gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+    gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
+    new Chart(ctx9, {
+      type: "line",
+      data: {
+        labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+        datasets: [{
+            label: "Original Model",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#cb0c9f",
+            borderWidth: 3,
+            backgroundColor: gradientStroke1,
+            fill: true,
+            data: <%= @org_fbeta %>,
+            maxBarThickness: 6
+
+          },
+          {
+            label: "Mutated Model",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#3A416F",
+            borderWidth: 3,
+            backgroundColor: gradientStroke2,
+            fill: true,
+            data: <%= @mutated_fbeta %>,
+            maxBarThickness: 6
+          },
+        ],
+      },
+      options: getChartOptions(),
+    });
   <% end %>
 </script>

@@ -24,39 +24,53 @@ class DashboardController < ApplicationController
   def selected_graphical_analysis
     return redirect_to specific_model_graph_eval_path(model_name: params[:model_name]), alert: "Please Select Atleast One Method!" unless params[:analysis].present?
 
+    if selected_analysis[:f_beta].present? && selected_analysis[:fbeta_range].present?
+      f_beta = selected_analysis[:fbeta_range].to_f
+    else
+      f_beta = 0.0
+    end
+
+    @original_analysis = @backend_serice.get_all_analysis_metrics(params[:model_name], f_beta)
+    @mutated_analysis = @backend_serice.get_all_analysis_metrics("Mutant", f_beta)
+
     if selected_analysis[:specificity].present?
-      @org_specificity = @backend_serice.get_model_metric(params[:model_name], 'specificity').values.map(&:to_f)
-      @mutated_specificity = @backend_serice.get_model_metric("Mutant", 'specificity').values.map(&:to_f)
+      @org_specificity = @original_analysis[1]["specificity"].values.map(&:to_f)
+      @mutated_specificity = @mutated_analysis[1]["specificity"].values.map(&:to_f)
     end
 
     if selected_analysis[:class_accuracy].present?
-      @org_class_accuracy = @backend_serice.get_model_metric(params[:model_name], 'class-accuracy').values.map(&:to_f)
-      @mutated_class_accuracy = @backend_serice.get_model_metric("Mutant", 'class-accuracy').values.map(&:to_f)
+      @org_class_accuracy = @original_analysis[0]["accuracy"].values.map(&:to_f)
+      @mutated_class_accuracy = @mutated_analysis[0]["accuracy"].values.map(&:to_f)
     end
 
     if selected_analysis[:f1_score].present?
-      @org_f1_scores = @backend_serice.get_model_metric(params[:model_name], 'f1-score').values.map(&:to_f)
-      @mutated_f1_scores = @backend_serice.get_model_metric("Mutant", 'f1-score').values.map(&:to_f)
+      @org_f1_scores = @original_analysis[5]["f1_score"].values.map(&:to_f)
+      @mutated_f1_scores = @mutated_analysis[5]["f1_score"].values.map(&:to_f)
     end
 
     if selected_analysis[:recall].present?
-      @org_recalls = @backend_serice.get_model_metric(params[:model_name], 'recall').values.map(&:to_f)
-      @mutated_recalls = @backend_serice.get_model_metric("Mutant", 'recall').values.map(&:to_f)
+      @org_recalls = @original_analysis[4]["recall"].values.map(&:to_f)
+      @mutated_recalls = @mutated_analysis[4]["recall"].values.map(&:to_f)
     end
 
     if selected_analysis[:precision].present?
-      @org_precision = @backend_serice.get_model_metric(params[:model_name], 'precision').values.map(&:to_f)
-      @mutated_precision = @backend_serice.get_model_metric("Mutant", 'precision').values.map(&:to_f)
+      @org_precision = @original_analysis[3]["precision"].values.map(&:to_f)
+      @mutated_precision = @mutated_analysis[3]["precision"].values.map(&:to_f)
     end
 
     if selected_analysis[:sensitivity].present?
-      @org_sensitivity = @backend_serice.get_model_metric(params[:model_name], 'sensitivity').values.map(&:to_f)
-      @mutated_sensitivity = @backend_serice.get_model_metric("Mutant", 'sensitivity').values.map(&:to_f)
+      @org_sensitivity = @original_analysis[2]["sensitivity"].values.map(&:to_f)
+      @mutated_sensitivity = @mutated_analysis[2]["sensitivity"].values.map(&:to_f)
     end
 
     if selected_analysis[:auc].present?
-      @org_auc = @backend_serice.get_model_metric(params[:model_name], 'auc').values.map(&:to_f)
-      @mutated_auc = @backend_serice.get_model_metric("Mutant", 'auc').values.map(&:to_f)
+      @org_auc = @original_analysis[6]["AUC"].values.map(&:to_f)
+      @mutated_auc = @mutated_analysis[6]["AUC"].values.map(&:to_f)
+    end
+
+    if selected_analysis[:f_beta].present?
+      @org_fbeta = @original_analysis[7]["F_beta"].values.map(&:to_f)
+      @mutated_fbeta = @mutated_analysis[7]["F_beta"].values.map(&:to_f)
     end
 
     if selected_analysis[:accuracy].present?
@@ -133,7 +147,7 @@ class DashboardController < ApplicationController
     end
 
     def selected_analysis
-      params.require(:analysis).permit(:specificity, :class_accuracy, :f1_score, :recall, :precision, :auc, :sensitivity, :accuracy)
+      params.require(:analysis).permit(:specificity, :class_accuracy, :f1_score, :recall, :precision, :auc, :sensitivity, :accuracy, :f_beta, :fbeta_range)
     end
 
     def operator_params

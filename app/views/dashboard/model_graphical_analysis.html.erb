@@ -40,9 +40,43 @@
     <%= f.check_box :accuracy, {class: "form-check-input"}, true, false  %>
     <%= f.label :accuracy, class: "form-check-label" %>
   </div>
+
+  <div class="form-group form-check form-switch">
+    <%= f.check_box :f_beta, {class: "form-check-input", onclick: "show_field_after_clicking_metric(this)"}, true, false  %>
+    <%= f.label :f_beta, class: "form-check-label" %>
+  </div>
+
+  <div class="row d-none" id="fbetaRangeDiv">
+    <div class="form-group col-6">
+       <label for="analysis[fbeta_range]">Range Selection for F Beta</label>
+       <br>
+      <%= f.range_field :fbeta_range, min: 0, max: 1, class: "form-control-range f-beta", step: "any" %>
+      <br>
+      <p>Value: <span id="slider_value"></span></p>
+    </div>
+  </div>
+
  
   <div class="form-group">
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 <% end %>
 </div>
+
+<script type="text/javascript">
+  var slider = document.getElementById("analysis_fbeta_range");
+  var output = document.getElementById("slider_value");
+  output.innerHTML = slider.value;
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+  }
+
+  function show_field_after_clicking_metric(event) {
+    if (event.checked) {
+      $('#fbetaRangeDiv').removeClass("d-none");
+    }
+    else {
+      $('#fbetaRangeDiv').addClass("d-none");
+    }
+  }  
+</script>

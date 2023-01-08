@@ -24,6 +24,11 @@ class XavierBackendService < ApplicationService
     JSON.parse(res)
   end
 
+  def get_all_analysis_metrics(model, beta = 0)
+    res = self.class.get("/report/#{model}/#{beta}", {})
+    JSON.parse(res)
+  end
+
   def get_operator_names(type)
     res = self.class.get("/operators-list/#{type}", {})
     JSON.parse(res)
@@ -31,7 +36,6 @@ class XavierBackendService < ApplicationService
 
   def generate_mutant(model, layer, operator, op_value, row, col, kernel)
     if operator.eql?("change-neuron")
-      # binding.pry
       endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}/#{op_value.to_f}"
     else
       endpoint = "/#{operator}/#{model}/#{layer}/#{row}/#{col}/#{kernel}"
