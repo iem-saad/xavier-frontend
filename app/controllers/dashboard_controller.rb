@@ -16,8 +16,9 @@ class DashboardController < ApplicationController
 
   def get_model_details
     return redirect_to dashbaord_mutation_testing_path, alert: "Invalid Model Selected!" unless params[:model_name].present?
+    type_dict = {"neuron_level": "neuron_layers", "weight_level": "edge-layers"}
 
-    @layer_names = @backend_serice.get_layer_names(params[:model_name])
+    @layer_names = @backend_serice.get_layer_names(params[:model_name], type_dict[params[:operator].to_sym])
     @model_image = @backend_serice.get_model_img(params[:model_name])
   end
 
@@ -35,6 +36,7 @@ class DashboardController < ApplicationController
 
   def get_layer_weights
     @kernels = @backend_serice.get_layer_weights(params[:model_name], params[:layer])
+    return redirect_to dashboard_index_path(model_name: params[:model_name]), alert: "Ops! Weights Not Found!" unless @kernels.present?
     @operator_list = @backend_serice.get_operator_names(1)
   end
 
@@ -45,9 +47,13 @@ class DashboardController < ApplicationController
 
   def put_layer_weights
     return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error! Operator Value Not Selected!" if operator_params[:operator].eql?("change-neuron") && !operator_params[:op_value].present?
-    return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error! Invalid Operator Selected!" if !operator_params[:modal_row].present? || !operator_params[:modal_col].present? || !operator_params[:modal_kernel].present?
+    #return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), alert: "Error! Invalid Operator Selected!" if !operator_params[:modal_row].present? || !operator_params[:modal_col].present? || !operator_params[:modal_kernel].present?
 
-    response = @backend_serice.generate_mutant(params[:model_name], params[:layer], operator_params[:operator], operator_params[:op_value], operator_params[:modal_row], operator_params[:modal_col], operator_params[:modal_kernel])
+    if params[:layer].include?("conv")
+      response = @backend_serice.generate_mutant(params[:model_name], params[:layer], operator_params[:operator], operator_params[:op_value], operator_params[:modal_row], operator_params[:modal_col], operator_params[:modal_kernel])
+    elsif params[:layer].include?("dense")
+      response = @backend_serice.generate_mutant(params[:model_name], params[:layer], operator_params[:operator], operator_params[:op_value], operator_params[:modal_prev], operator_params[:modal_curr], 0)
+    end
     return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), notice: response.values[0]
   end
 
@@ -61,7 +67,7 @@ class DashboardController < ApplicationController
     end
 
     def operator_params
-      params.require(:operator_type).permit(:modal_kernel, :modal_row, :modal_col, :operator, :op_value)
+      params.require(:operator_type).permit(:modal_kernel, :modal_row, :modal_col, :operator, :op_value, :modal_prev, :modal_curr)
     end
 
     def protect_invalid_access

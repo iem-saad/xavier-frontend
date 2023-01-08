@@ -28,14 +28,14 @@
   <% if controller_name.eql?("home") || current_user.nil? %>
     <body>
       <%= yield %>
-      <%= render("shared/footer") %>
+      <%= render "shared/footer", sticky_klass: '' %>
     </body>
   <% else %>
     <body class="g-sidenav-show  bg-gray-100">
       <%= render("shared/dashboard_sidebar") %>
       <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <%= yield %>
-        <%= render("shared/footer") %>
+        <%= render "shared/footer", sticky_klass: 'custom-footer' %>
       </main>
     </body>
   <% end %>
