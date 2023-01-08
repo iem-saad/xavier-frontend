@@ -22,7 +22,7 @@ class DashboardController < ApplicationController
   end
 
   def selected_graphical_analysis
-    return redirect_to specific_model_graph_eval_path(model_name: params[:model_name]), alert: "Please Select Atleast One Method!" unless params[:analysis].present?
+    return redirect_to specific_model_graph_eval_path(model_name: params[:model_name]), alert: "Please Select Atleast One Method!" if selected_analysis&.to_h&.length <= 1
 
     if selected_analysis[:f_beta].present? && selected_analysis[:fbeta_range].present?
       f_beta = selected_analysis[:fbeta_range].to_f
