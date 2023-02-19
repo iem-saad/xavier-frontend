@@ -242,21 +242,20 @@
         </div>
 
         <div class="col-lg-8 mt-5 mt-lg-0">
-
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <%= form_for :form,  url: submit_form_path, method: :post, class: 'php-email-form', data: {turbo: false} do |f| %>
             <div class="row">
               <div class="col-md-6 form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                <%= f.text_field :name, class: "form-control", placeholder: "Your Name*", required: true %>
               </div>
               <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                <%= f.email_field :email, class: "form-control", placeholder: "Your Email*", required: true %>
               </div>
             </div>
             <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              <%= f.text_field :subject, class: "form-control", placeholder: "Subject*", required: true %>
             </div>
             <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              <%= f.text_area :message, class: "form-control", placeholder: "Message*", required: true, rows: 5 %>
             </div>
             <div class="my-3">
               <div class="loading">Loading</div>
@@ -264,7 +263,7 @@
               <div class="sent-message">Your message has been sent. Thank you!</div>
             </div>
             <div class="text-center"><button type="submit">Send Message</button></div>
-          </form>
+          <% end %>
 
         </div>
 
