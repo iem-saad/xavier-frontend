@@ -1,5 +1,4 @@
 class DashboardController < ApplicationController
-  before_action :initialize_backend_service
   before_action :protect_invalid_access
 
   def index; end
@@ -20,6 +19,10 @@ class DashboardController < ApplicationController
 
     @layer_names = @backend_serice.get_layer_names(params[:model_name], type_dict[params[:operator].to_sym])
     @model_image = @backend_serice.get_model_img(params[:model_name])
+
+    respond_to do |format|
+      format.json { render json: op_type_dict[params[:model_name].to_sym].to_json }
+    end
   end
 
   def selected_graphical_analysis
@@ -58,10 +61,6 @@ class DashboardController < ApplicationController
   end
 
   private
-    def initialize_backend_service
-      @backend_serice ||= XavierBackendService.new
-    end
-
     def selected_analysis
       params.require(:analysis).permit(:specificity, :class_accuracy, :f1_score, :recall, :precision, :auc, :sensitivity, :accuracy, :f_beta, :fbeta_range)
     end

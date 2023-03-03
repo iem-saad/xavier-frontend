@@ -1,0 +1,83 @@
+<%= simple_form_for @project do |f| %>
+  <% if @project.errors.any? %>
+    <div style="color: red">
+      <h2>
+        <%= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"%>
+        <ul>
+          <% @project.errors.each do |error| %>
+            <li>
+              <%= error.full_message %>
+            </li>
+          <% end %>
+        </ul>
+      </h2>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name %><br/>
+    <%= f.text_field :name, required: true , class: "border p-3 w-100 my-2", "data-parsley-required-message": "This is a Mandatory Field" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br/>
+    <%= f.text_area :description, required: true , class: "border p-3 w-100 my-2", "data-parsley-required-message": "This is a Mandatory Field" %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :model %><br/>
+    <%= f.select :model, options_for_select(@model_names), {prompt: "Select a Model"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :operator_type %><br/>
+    <%= f.select :operator_type, options_for_select([]), {prompt: "Select an Operator Type"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :operator_name %><br/>
+    <%= f.select :operator_name, options_for_select([]), {prompt: "Select an Operator Name"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+  </div>
+  <%= f.hidden_field :user_id %>
+      
+  <div class="actions">
+    <%= f.submit class: "d-block py-3 px-4 font-weight-bold" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $('body').on('change', '#project_model', function(event) {
+    if ($(this).val() == '')
+      return
+    $.ajax({
+      url: "/get_model_applicable_operator/" + $(this).val(),
+      type: "GET",
+      data: { },
+      success: function(data) {
+        $("#project_operator_type").children().remove();
+        var listitems = [];
+        $.each(data,function(key, value) { 
+          listitems += '<option value="' + value + '">' + value + '</option>';    
+        });
+        $("#project_operator_type").append(listitems);
+      }
+    })
+  });
+
+  $('body').on('change', '#project_operator_type', function(event) {
+    if ($(this).val() == '')
+      return
+    $.ajax({
+      url: "get_model_applicable_operator_names/" + $('#project_model').val() + "/" + $(this).val(),
+      type: "GET",
+      data: { },
+      success: function(data) {
+        $("#project_operator_name").children().remove();
+        var listitems = [];
+        $.each(data,function(key, value) { 
+          listitems += '<option value="' + value + '">' + value + '</option>';    
+        });
+        $("#project_operator_name").append(listitems);
+      }
+    })
+  });
+</script>

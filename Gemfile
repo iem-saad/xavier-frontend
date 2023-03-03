@@ -50,6 +50,7 @@ gem "slim-rails"
 gem 'foreman', '~> 0.87.2'
 gem 'httparty', '~> 0.20.0'
 gem "pry"
+gem 'simple_form'
 
 # Use Sass to process CSS
 gem "sassc-rails"
