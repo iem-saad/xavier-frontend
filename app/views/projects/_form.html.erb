@@ -29,18 +29,25 @@
   </div>
 
   <div class="field">
+    <% op_types = @operator_types&.any? ? @operator_types : [] %>
     <%= f.label :operator_type %><br/>
-    <%= f.select :operator_type, options_for_select([]), {prompt: "Select an Operator Type"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+    <%= f.select :operator_type, options_for_select(op_types, f.object.hyper_params.dig("operator_type")), {prompt: "Select an Operator Type"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
   </div>
 
   <div class="field">
-    <%= f.label :operator_name %><br/>
-    <%= f.select :operator_name, options_for_select([]), {prompt: "Select an Operator Name"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+    <%#= f.label :operator_name %><br/>
+    <%#= f.select :operator_name, options_for_select([f.object.hyper_params.dig("operator_name")]), {prompt: "Select an Operator Name"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
   </div>
+
+  <div class="field">
+    <%= f.label :k_value %><br/>
+    <%= f.number_field :k_value, in: 80..150, class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field" %>
+  </div>
+
   <%= f.hidden_field :user_id %>
       
   <div class="actions">
-    <%= f.submit class: "d-block py-3 px-4 font-weight-bold" %>
+    <%= f.submit "Proceed to Next Step", class: "d-block py-3 px-4 font-weight-bold" %>
   </div>
 <% end %>
 
@@ -59,25 +66,26 @@
           listitems += '<option value="' + value + '">' + value + '</option>';    
         });
         $("#project_operator_type").append(listitems);
+        $("#project_operator_type").trigger("change");
       }
     })
   });
 
-  $('body').on('change', '#project_operator_type', function(event) {
-    if ($(this).val() == '')
-      return
-    $.ajax({
-      url: "get_model_applicable_operator_names/" + $('#project_model').val() + "/" + $(this).val(),
-      type: "GET",
-      data: { },
-      success: function(data) {
-        $("#project_operator_name").children().remove();
-        var listitems = [];
-        $.each(data,function(key, value) { 
-          listitems += '<option value="' + value + '">' + value + '</option>';    
-        });
-        $("#project_operator_name").append(listitems);
-      }
-    })
-  });
+  // $('body').on('change', '#project_operator_type', function(event) {
+  //   if ($(this).val() == '')
+  //     return
+  //   $.ajax({
+  //     url: "get_model_applicable_operator_names/" + $('#project_model').val() + "/" + $(this).val(),
+  //     type: "GET",
+  //     data: { },
+  //     success: function(data) {
+  //       $("#project_operator_name").children().remove();
+  //       var listitems = [];
+  //       $.each(data,function(key, value) { 
+  //         listitems += '<option value="' + value + '">' + value + '</option>';    
+  //       });
+  //       $("#project_operator_name").append(listitems);
+  //     }
+  //   })
+  // });
 </script>

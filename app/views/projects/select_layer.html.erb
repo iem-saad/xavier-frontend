@@ -1,0 +1,43 @@
+<style type="text/css">
+  .card {
+    backdrop-filter: blur(5px);
+    min-width: 35vh;
+    height: 10vh;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.051),
+      0px 0px 7.2px rgba(0, 0, 0, 0.073), 0px 0px 13.6px rgba(0, 0, 0, 0.09),
+      0px 0px 24.3px rgba(0, 0, 0, 0.107), 0px 0px 45.5px rgba(0, 0, 0, 0.129),
+      0px 0px 109px rgba(0, 0, 0, 0.18);
+  }
+</style>
+<div class="container-fluid py-4">
+  <h6>Following is model's visualization(LeNet-5):</h6>
+  <div class="row py-4">
+    <div class="col">
+      <%= image_tag("lenet.png", class: "img-fluid", style: "height: 300px;") %>
+    </div>
+    <div class="col">
+      <%= image_tag("lenet_model.png", style: "height: 300px; width: 300px;") %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h6>Following are the layers which are currenlty supported for <%= @operator_type %> Mutations on <%= @model_name %>:</h6>
+  <% @layer_names.each do |layer_name| %>
+    <div class="col-xl-3 col-sm-3 mb-xl-0 p-2">
+      <%= link_to select_mutant_location_path(layer: layer_name) do %>
+        <div class="card card-hover" style="background-color: <%= color_according_to_layer(layer_name)%>;">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <h3 class="font-weight-bolder p-3">
+                  <%= layer_name %>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

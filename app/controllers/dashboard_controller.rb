@@ -22,6 +22,7 @@ class DashboardController < ApplicationController
 
     respond_to do |format|
       format.json { render json: op_type_dict[params[:model_name].to_sym].to_json }
+      format.html { render :get_model_details }
     end
   end
 

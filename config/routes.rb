@@ -24,4 +24,7 @@ Rails.application.routes.draw do
 
   get "get_model_applicable_operator/:model_name", to: "projects#get_model_applicable_operator", as: 'get_model_applicable_operator'
   get "/projects/get_model_applicable_operator_names/:model_name/:operator", to: "projects#get_model_applicable_operator_names", as: 'get_model_applicable_operator_names'
+  get '/projects/:id/select_layer', to: 'projects#select_layer', as: 'select_layer'
+  get "/projects/:id/select_mutant_location/:layer", to: "projects#select_mutant_location", as: 'select_mutant_location'
+  post "/projects/:id/start_mutation_testing", to: "projects#start_mutation_testing", as: 'start_mutation_testing'
 end
