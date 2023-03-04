@@ -108,6 +108,7 @@ class ProjectsController < ApplicationController
       # response = @backend_serice.generate_mutant(model, layer, operator_params[:operator], operator_params[:op_value], operator_params[:modal_prev], operator_params[:modal_curr], 0)
       @project.hyper_params.update(operator_params: operator_params.to_h)
     end
+    @project.in_progress!
     @project.save
     return redirect_to projects_path(), notice: "response.values[0]"
   end
