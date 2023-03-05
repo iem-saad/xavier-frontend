@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   # GET /projects or /projects.json
   def index
     @projects = Project.all
+    MutationTestingJob.perform_later(@projects[0])
   end
 
   # GET /projects/1 or /projects/1.json

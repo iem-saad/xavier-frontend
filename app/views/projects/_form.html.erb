@@ -34,10 +34,10 @@
     <%= f.select :operator_type, options_for_select(op_types, f.object.hyper_params.dig("operator_type")), {prompt: "Select an Operator Type"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
   </div>
 
-  <div class="field">
-    <%#= f.label :operator_name %><br/>
+  <!-- <div class="field"> -->
+    <%#= f.label :operator_name %>
     <%#= f.select :operator_name, options_for_select([f.object.hyper_params.dig("operator_name")]), {prompt: "Select an Operator Name"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
-  </div>
+  <!-- </div> -->
 
   <div class="field">
     <%= f.label :k_value %><br/>
@@ -46,8 +46,8 @@
 
   <%= f.hidden_field :user_id %>
       
-  <div class="actions">
-    <%= f.submit "Proceed to Next Step", class: "d-block py-3 px-4 font-weight-bold" %>
+  <div class="actions my-3">
+    <%= f.submit "Proceed to Next Step", class: "d-block py-3 px-4 font-weight-bold btn btn-secondary" %>
   </div>
 <% end %>
 

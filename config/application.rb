@@ -20,5 +20,6 @@ module XavierFrontend
     # config.eager_load_paths << Rails.root.join("extras")
     config.available_models = ['lenet5']
     config.available_operators = ['neuron_level', 'weight_level']
+    config.active_job.queue_adapter = :sidekiq
   end
 end

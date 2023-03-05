@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :projects
+  resources :projects, except: [:destroy]
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -27,4 +27,5 @@ Rails.application.routes.draw do
   get '/projects/:id/select_layer', to: 'projects#select_layer', as: 'select_layer'
   get "/projects/:id/select_mutant_location/:layer", to: "projects#select_mutant_location", as: 'select_mutant_location'
   post "/projects/:id/start_mutation_testing", to: "projects#start_mutation_testing", as: 'start_mutation_testing'
+  delete 'destroy_project/:id', to: "projects#destroy", as: "destroy_project"
 end

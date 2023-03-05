@@ -54,4 +54,9 @@ class XavierBackendService < ApplicationService
     end
     response = self.class.put(endpoint, headers: { "Content-Type" => 'application/json' })
   end
+
+  def start_mutation_testing(p_id)
+    res = self.class.get("/run/#{p_id}", {})
+    JSON.parse(res)
+  end
 end
