@@ -33,29 +33,34 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
+              <a href="javascript:;" class="nav-link text-body p-0 make_notification_seen" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bell fa-lg cursor-pointer"></i>
+                <% if current_user.notifications&.unseen&.count.present? && current_user.notifications&.unseen&.count > 0 %>
+                <span id="unseen_count" class="text-danger"><%=%></span>
+                <% end %>
               </a>
-              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="javascript:;">
-                    <div class="d-flex py-1">
-                      <div class="my-auto">
-                        <%= image_tag("xavier.png", class: "avatar avatar-sm  me-3") %>
+                <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <% current_user.notifications.unseen.each do |notification| %>
+                  <li class="mb-2">
+                    <a class="dropdown-item border-radius-md" href="<%= project_path(notification.project)%>">
+                      <div class="d-flex py-1">
+                        <div class="my-auto">
+                          <%= image_tag("xavier.png", class: "avatar avatar-sm  me-3") %>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="text-sm font-weight-normal mb-1">
+                            <span class="font-weight-bold text-<%= notification.n_type %>"><%= "#{notification.text} #{notification.project.name}" %></span> from xavier-backend
+                          </h6>
+                          <p class="text-xs text-secondary mb-0 ">
+                            <i class="fa fa-clock me-1"></i>
+                            <%= time_ago_in_words(notification.created_at) %> Ago
+                          </p>
+                        </div>
                       </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold">Report is Ready</span> from xavier-backend
-                        </h6>
-                        <p class="text-xs text-secondary mb-0 ">
-                          <i class="fa fa-clock me-1"></i>
-                          13 minutes ago
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
+                    </a>
+                  </li>
+                <% end %>
+                </ul>
             </li>
           </ul>
         </div>
@@ -131,4 +136,15 @@
     }
     Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
   }
+
+  $('body').on('click', '.make_notification_seen', function(event) {
+    $.ajax({
+      url: "/make_notifications_seen/",
+      type: "GET",
+      data: { },
+      success: function(data) {
+        $("#unseen_count").html('');
+      }
+    })
+  });
 </script>

@@ -71,6 +71,17 @@
     })
   });
 
+  $('body').on('click', '.make_notification_seen', function(event) {
+    $.ajax({
+      url: "/make_notifications_seen/",
+      type: "PUT",
+      data: { },
+      success: function(data) {
+        $("#unseen_count").html('');
+      }
+    })
+  });
+
   // $('body').on('change', '#project_operator_type', function(event) {
   //   if ($(this).val() == '')
   //     return

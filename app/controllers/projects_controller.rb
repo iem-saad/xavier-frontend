@@ -4,7 +4,6 @@ class ProjectsController < ApplicationController
   # GET /projects or /projects.json
   def index
     @projects = Project.all
-    MutationTestingJob.perform_later(@projects[0])
   end
 
   # GET /projects/1 or /projects/1.json
@@ -112,6 +111,10 @@ class ProjectsController < ApplicationController
     @project.in_progress!
     @project.save
     return redirect_to projects_path(), notice: "response.values[0]"
+  end
+
+  def make_notifications_seen
+    current_user.notifications.unseen.update_all(seen: true)
   end
 
   private
