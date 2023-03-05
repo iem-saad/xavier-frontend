@@ -1,26 +1,32 @@
 <tr>
-  <td><%= project.name %></td>
-  <td><%= project.description %></td>
-  <td><%= project.status %></td>
-  <td>
-		<div>
+  <td class="align-middle">
+    <%= project.name %>
+  </td>
+  <td class="text-xs font-weight-bold">
+    <%= project.description %>
+  </td>
+  <td class="align-middle text-center text-sm">
+    <span class="badge badge-sm bg-gradient-<%= project.completed? ? 'success' : 'secondary' %>"><%= project.status %></span>
+  </td>
+  <td class="align-middle text-center">
+    <div>
       <ul class="list-inline justify-content-center">
         <li class="list-inline-item">
-          <%= link_to project, 'data-toggle': "tooltip", 'data-placement': "top", title: "View", class: 'view' do %>
+          <%= link_to project, 'data-toggle': "tooltip", 'data-placement': "top", title: "View", class: 'text-secondary font-weight-bold text-xs' do %>
               <i class="fa fa-eye"></i>
           <% end %>
         </li>
           <li class="list-inline-item">
-            <%= link_to edit_project_path(project), 'data-toggle': "tooltip", 'data-placement': "top", title: "Edit", class: 'edit' do %>
+            <%= link_to edit_project_path(project), 'data-toggle': "tooltip", 'data-placement': "top", title: "Edit", class: 'text-secondary font-weight-bold text-xs' do %>
               <i class="fa fa-edit"></i>
             <% end %>
           </li>
         <li class="list-inline-item">
-          <%= link_to destroy_project_path(id: project.id), method: :delete, data: { confirm: "Are You Sure?", "turbo-method": :delete }, 'data-toggle': "tooltip", 'data-placement': "top", title: "Delete Project", class: 'delete' do %>
+          <%= link_to destroy_project_path(id: project.id), method: :delete, data: { confirm: "Are You Sure?", "turbo-method": :delete }, 'data-toggle': "tooltip", 'data-placement': "top", title: "Delete Project", class: 'delete text-secondary font-weight-bold text-xs' do %>
               <i class="fa fa-trash"></i>
           <% end %>
         </li>
       </ul>
     </div>
-	</td>
+  </td>
 </tr>
