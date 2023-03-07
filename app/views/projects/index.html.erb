@@ -7,7 +7,6 @@
         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-        <!-- <th class="text-secondary opacity-7"></th> -->
       </tr>
     </thead>
     <tbody>
@@ -19,4 +18,26 @@
     </tbody>
   </table>
 </div>
+
+<h3 class="my-4">Following Projects are missing some parameters for mutation testing.</h3>
+<div class="table-responsive bg-white">
+  <table class="table align-items-center mb-0">
+    <thead>
+      <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% if @un_conf_projects.any? %>
+      <% @un_conf_projects.each_with_index do |project, index| %>
+        <%= render project %>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
 <%= link_to "New project", new_project_path, class: "btn btn-secondary my-5" %>

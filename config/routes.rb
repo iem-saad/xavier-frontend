@@ -1,6 +1,8 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   resources :projects, except: [:destroy]
   devise_for :users
+  mount Sidekiq::Web => '/sidekiq'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

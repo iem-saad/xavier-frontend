@@ -17,8 +17,14 @@
           <% end %>
         </li>
           <li class="list-inline-item">
-            <%= link_to edit_project_path(project), 'data-toggle': "tooltip", 'data-placement': "top", title: "Edit", class: 'text-secondary font-weight-bold text-xs' do %>
-              <i class="fa fa-edit"></i>
+            <% if project.unconfigured? %>
+              <%= link_to select_layer_path(id: project.id), 'data-toggle': "tooltip", 'data-placement': "top", title: "Configure Project", class: 'text-secondary font-weight-bold text-xs' do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
+            <% else %>
+              <%= link_to edit_project_path(project), 'data-toggle': "tooltip", 'data-placement': "top", title: "Edit", class: 'text-secondary font-weight-bold text-xs' do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
             <% end %>
           </li>
         <li class="list-inline-item">

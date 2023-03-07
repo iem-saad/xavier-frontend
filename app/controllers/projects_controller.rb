@@ -3,7 +3,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.configured.all
+    @un_conf_projects = Project.unconfigured.all
   end
 
   # GET /projects/1 or /projects/1.json
@@ -110,7 +111,8 @@ class ProjectsController < ApplicationController
     end
     @project.in_progress!
     @project.save
-    return redirect_to projects_path(), notice: "response.values[0]"
+    MutationTestingJob.perform_later(@project)
+    return redirect_to projects_path(), notice: "Mutation Testing Started, You will be Notified when processing is complete."
   end
 
   def make_notifications_seen
