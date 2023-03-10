@@ -28,6 +28,8 @@ class ProjectsController < ApplicationController
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
+    @model_names = @backend_serice.get_model_names()
+    @operator_types = nil
 
     respond_to do |format|
       if @project.save
