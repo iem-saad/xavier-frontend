@@ -56,7 +56,7 @@ class XavierBackendService < ApplicationService
   end
 
   def start_mutation_testing(p_id)
-    res = self.class.get("/run/#{p_id}", {})
+    res = self.class.get("/run/#{p_id}", {read_timeout: 1000000})
     JSON.parse(res)
   end
 end

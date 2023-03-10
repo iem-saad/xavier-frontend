@@ -93,7 +93,7 @@ class ProjectsController < ApplicationController
   end
 
   def select_mutant_location
-    @project.hyper_params.update(layer: params[:layer])
+    @project.hyper_params.update("layer": params[:layer])
     @project.save
     @operator_list = @backend_serice.get_operator_names(1)
     @kernels = @backend_serice.get_layer_weights(@project.hyper_params&.dig("model"), params[:layer])
