@@ -254,7 +254,16 @@
   </div>
 </div>
 <% end %>
-<div class="row card mt-4">
+
+<% if @project.completed? %>
+<div class="row card mt-4 m-1">
+  <h3 class="p-3 mx-3">Results</h3>
+  <h5 class="mx-3">Status: <%= @project.results.dig("status") %></h5>
+  <h5 class="mx-3">Beta: <%= @project.results.dig("Beta") %></h5>
+  <h5 class="mx-3">P-Value: <%= @project.results.dig("P-Value") %></h5>
+  <h5 class="mx-3">Effect Size: <%= @project.results.dig("Effect Size") %></h5>
+</div>
+<div class="row card mt-4 m-1">
   <h3 class="p-3 mx-3">Mutation Analysis (Graphical)</h3>
   <div class="accordion accordion-flush" id="accordionFlushExample">
   <% @project.original_models.each_with_index do |model, index| %>
@@ -282,7 +291,7 @@
   </div>
 </div>
 
-<div class="row card mt-4">
+<div class="row card mt-4 m-1">
   <h3 class="p-3 mx-3">Mutation Analysis (Tabular)</h3>
   <div class="accordion accordion-flush" id="accordionFlushExample">
   <% @project.original_models.each_with_index do |model, index| %>
@@ -309,3 +318,4 @@
   <% end %>
   </div>
 </div>
+<% end %>

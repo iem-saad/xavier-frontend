@@ -1,7 +1,7 @@
 <%= simple_form_for @project do |f| %>
   <% if @project.errors.any? %>
-    <div style="color: red">
-      <h2>
+    <div class="text-danger">
+      <h4 class="text-danger">
         <%= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"%>
         <ul>
           <% @project.errors.each do |error| %>
@@ -10,7 +10,7 @@
             </li>
           <% end %>
         </ul>
-      </h2>
+      </h4>
     </div>
   <% end %>
   <div class="field">

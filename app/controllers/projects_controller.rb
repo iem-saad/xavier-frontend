@@ -1,10 +1,10 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy select_layer select_mutant_location start_mutation_testing ]
-
+  before_action :set_op_type_dict
   # GET /projects or /projects.json
   def index
-    @projects = Project.configured.all
-    @un_conf_projects = Project.unconfigured.all
+    @projects = current_user&.projects&.configured
+    @un_conf_projects = current_user&.projects&.unconfigured
   end
 
   # GET /projects/1 or /projects/1.json
@@ -21,22 +21,22 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @model_names = @backend_serice.get_model_names()
-    op_type_dict = {"lenet5": ["neuron_level","weight_level"]}
-    @operator_types = op_type_dict[@project.hyper_params["model"].to_sym]
+    @operator_types = @op_type_dict[@project.hyper_params["model"].to_sym]
   end
 
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
     @model_names = @backend_serice.get_model_names()
-    @operator_types = nil
+    
+    @operator_types = @op_type_dict[@project.hyper_params["model"].to_sym]
 
     respond_to do |format|
       if @project.save
         format.html { redirect_to select_layer_path(id: @project.id), notice: "Project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -66,10 +66,9 @@ class ProjectsController < ApplicationController
   end
 
   def get_model_applicable_operator
-    op_type_dict = {"lenet5": ["neuron_level","weight_level"]}
 
     respond_to do |format|
-      format.json { render json: op_type_dict[params[:model_name].to_sym].to_json }
+      format.json { render json: @op_type_dict[params[:model_name].to_sym].to_json }
     end
   end
 
@@ -134,5 +133,9 @@ class ProjectsController < ApplicationController
 
     def operator_params
       params.require(:operator_type).permit(:modal_kernel, :modal_row, :modal_col, :operator, :op_value, :modal_prev, :modal_curr)
+    end
+
+    def set_op_type_dict
+      @op_type_dict ||= {"lenet5": ["neuron_level","weight_level"]}
     end
 end
