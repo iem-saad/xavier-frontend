@@ -71,7 +71,7 @@
           </div>
           <div class="col-4 text-end">
             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-              <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+              <i class="fa fa-sitemap text-lg opacity-10" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
           </div>
           <div class="col-4 text-end">
             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-              <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+              <i class="fa fa-bacterium text-lg opacity-10" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
           </div>
           <div class="col-4 text-end">
             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-              <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+              <i class="fa fa-refresh text-lg opacity-10" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -137,7 +137,7 @@
           </div>
           <div class="col-4 text-end">
             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-              <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+              <i class="fa fa-signal text-lg opacity-10" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -158,7 +158,7 @@
           </div>
           <div class="col-4 text-end">
             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-              <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+              <i class="fa fa-atom text-lg opacity-10" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -200,7 +200,7 @@
           </div>
           <div class="col-4 text-end">
             <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-              <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+              <i class="fa fa-calculator text-lg opacity-10" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -248,9 +248,9 @@
   </div>
 </div>
 <% if @project.in_progress? %>
-<div class="row">
-  <div class="water my-4" style="margin-left: 40%;"></div>
-  <div style="margin-left: 42%;"><h3>Processing...</h3>
+<div class="row" style="display: flex; justify-content: center;">
+  <div class="water my-4"></div>
+  <div style="display: flex; justify-content: center;"><h3>Processing...</h3>
   </div>
 </div>
 <% end %>
@@ -262,6 +262,11 @@
   <h5 class="mx-3">Beta: <%= @project.results.dig("Beta") %></h5>
   <h5 class="mx-3">P-Value: <%= @project.results.dig("P-Value") %></h5>
   <h5 class="mx-3">Effect Size: <%= @project.results.dig("Effect Size") %></h5>
+  <% if @project.results.dig("Mutation") %>
+    <h5 class="mx-3 text-success">Mutation is Successfully Killed!</h5>
+  <% else %>
+    <h5 class="mx-3 text-danger">Ops, Mutation is Not Killed!</h5>
+  <% end %>
 </div>
 <div class="row card mt-4 m-1">
   <h3 class="p-3 mx-3">Mutation Analysis (Graphical)</h3>
@@ -277,13 +282,14 @@
       </h2>
       <div id="flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%=index%>" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
+          <div class="row">
           <% model.matrices.each_with_index do |matrice, i| %>
             <% key = matrice.keys[0] %>
             <% org_data = matrice[key].values.map(&:to_f) %>
             <% mutated_data = model.mutated_model.matrices[i][key].values.map(&:to_f) %>
-
             <%= render 'linear_graph', type: key, id: key, org_data: org_data, mutated_data: mutated_data, index: index %>
           <% end %>
+          </div>
         </div>
       </div>
     </div>
