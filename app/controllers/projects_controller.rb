@@ -120,6 +120,10 @@ class ProjectsController < ApplicationController
     current_user.notifications.unseen.update_all(seen: true)
   end
 
+  def mutation_analysis
+    @projects = current_user.projects.completed
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

@@ -6,6 +6,6 @@
   <body>
     <h1>Hi, <%= @project.user.email %>! Your Project <%= @project.name %> has a status update.</h1>
     <h3>Status: <%= @project.status %></h3>
-    <h3>Please Visit To Get more info regarding your project: <%= link_to "See Status", project_url(@project), only_path: true %></h3>
+    <h3>Please Visit To Get more info regarding your project: <%#= link_to "See Status", project_url(@project), only_path: true %></h3>
   </body>
 </html>

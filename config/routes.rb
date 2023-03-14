@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   post "/projects/:id/start_mutation_testing", to: "projects#start_mutation_testing", as: 'start_mutation_testing'
   delete 'destroy_project/:id', to: "projects#destroy", as: "destroy_project"
   get '/make_notifications_seen/', to: "projects#make_notifications_seen", as: "make_notifications_seen"
+  get "mutation_analysis", to: "projects#mutation_analysis" 
 end

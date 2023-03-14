@@ -29,10 +29,10 @@
         <% end %>
       </li>
       <li class="nav-item">
-        <%= link_to dashbaord_mutation_testing_path, class: "nav-link #{current_active_tab(dashbaord_mutation_testing_url)}" do %>
+        <%= link_to new_project_path, class: "nav-link #{current_active_tab(new_project_url)}" do %>
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <title>Mutation Testing</title>
+              <title>Create New Project</title>
               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
                   <g transform="translate(1716.000000, 291.000000)">
@@ -45,11 +45,11 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Mutation Testing</span>
+          <span class="nav-link-text ms-1">Create New Project</span>
         <% end %>
       </li>
       <li class="nav-item">
-        <%= link_to dashbaord_mutation_analysis_path, class: "nav-link #{current_active_tab(dashbaord_mutation_analysis_url)}" do %>
+        <%= link_to mutation_analysis_path, class: "nav-link #{current_active_tab(mutation_analysis_url)}" do %>
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <title>Mutation Analysis</title>

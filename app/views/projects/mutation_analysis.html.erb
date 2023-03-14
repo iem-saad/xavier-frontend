@@ -1,0 +1,18 @@
+<h3>Following are Available Projects for Mutation Analysis.</h3>
+<div class="table-responsive bg-white">
+  <table class="table align-items-center mb-0">
+    <thead>
+      <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% if @projects.any? %>
+      <% @projects.each_with_index do |project, index| %>
+        <%= render 'analysis_table_row', project: project %>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>
