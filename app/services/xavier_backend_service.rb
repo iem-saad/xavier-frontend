@@ -23,6 +23,11 @@ class XavierBackendService < ApplicationService
     end
   end
 
+  def get_bias_weights(model, layer)
+    res = self.class.get("/bias-weights/#{model}/#{layer}", {})
+    JSON.parse(res)
+  end
+
   def get_model_metric(model, matric)
     res = self.class.get("/#{matric}/#{model}", {})
     JSON.parse(res)

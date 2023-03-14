@@ -83,7 +83,7 @@ class ProjectsController < ApplicationController
   end
 
   def select_layer
-    type_dict = {"neuron_level": "neuron_layers", "weight_level": "edge-layers"}
+    type_dict = {"neuron_level": "neuron_layers", "weight_level": "edge-layers", "change-bias-value": "bias_layers"}
 
     @model_name = @project.hyper_params&.dig("model")
     @operator_type = @project.hyper_params&.dig("operator_type")
@@ -95,7 +95,11 @@ class ProjectsController < ApplicationController
     @project.hyper_params.update("layer": params[:layer])
     @project.save
     @operator_list = @backend_serice.get_operator_names(1)
-    @kernels = @backend_serice.get_layer_weights(@project.hyper_params&.dig("model"), params[:layer])
+    if @project.hyper_params.dig("operator_type").eql?("change-bias-value")
+      @kernels = @backend_serice.get_bias_weights(@project.hyper_params&.dig("model"), params[:layer])
+    else
+      @kernels = @backend_serice.get_layer_weights(@project.hyper_params&.dig("model"), params[:layer])
+    end
     return redirect_to projects_path, alert: "Ops! Weights Not Found!" unless @kernels.present?
   end
 
@@ -140,6 +144,6 @@ class ProjectsController < ApplicationController
     end
 
     def set_op_type_dict
-      @op_type_dict ||= {"lenet5": ["neuron_level","weight_level"]}
+      @op_type_dict ||= {"lenet5": ["neuron_level","weight_level", "change-bias-value"]}
     end
 end
