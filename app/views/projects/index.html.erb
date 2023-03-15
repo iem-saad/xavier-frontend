@@ -42,4 +42,25 @@
 </div>
 <% end %>
 
+<% if @failed_projects.any? %>
+<h3 class="my-4">Following Projects failed the execution process, Please Restart the ones you need.</h3>
+<div class="table-responsive bg-white">
+  <table class="table align-items-center mb-0">
+    <thead>
+      <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @failed_projects.each_with_index do |project, index| %>
+        <%= render project %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+
 <%= link_to "New project", new_project_path, class: "btn btn-secondary my-5" %>

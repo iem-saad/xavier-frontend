@@ -32,4 +32,5 @@ Rails.application.routes.draw do
   delete 'destroy_project/:id', to: "projects#destroy", as: "destroy_project"
   get '/make_notifications_seen/', to: "projects#make_notifications_seen", as: "make_notifications_seen"
   get "mutation_analysis", to: "projects#mutation_analysis" 
+  get "/projects/:id/restart_mutation_testing", to: "projects#restart_mutation_testing", as: 'restart_mutation_testing'
 end

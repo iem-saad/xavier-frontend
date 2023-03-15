@@ -12,14 +12,20 @@
     <div>
       <ul class="list-inline justify-content-center">
         <li class="list-inline-item">
-          <%= link_to project, 'data-toggle': "tooltip", 'data-placement': "top", title: "View", class: 'text-secondary font-weight-bold text-xs' do %>
-              <i class="fa fa-eye"></i>
+          <% unless project.unconfigured? %>
+            <%= link_to project, 'data-toggle': "tooltip", 'data-placement': "top", title: "View", class: 'text-secondary font-weight-bold text-xs' do %>
+                <i class="fa fa-eye"></i>
+            <% end %>
           <% end %>
         </li>
           <li class="list-inline-item">
             <% if project.unconfigured? %>
               <%= link_to select_layer_path(id: project.id), 'data-toggle': "tooltip", 'data-placement': "top", title: "Configure Project", class: 'text-secondary font-weight-bold text-xs' do %>
                 <i class="fa fa-edit"></i>
+              <% end %>
+            <% elsif project.error? %>
+              <%= link_to restart_mutation_testing_path(id: project.id), 'data-toggle': "tooltip", 'data-placement': "top", title: "Re-Start Project", class: 'text-secondary font-weight-bold text-xs' do %>
+                <i class="fa fa-refresh"></i>
               <% end %>
             <% end %>
           </li>

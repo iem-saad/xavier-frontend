@@ -1,5 +1,5 @@
 <% if params[:layer].include?("conv") %>
-  <% if @project.hyper_params.dig("operator_type").eql?("change-bias-value") %>
+  <% if @project.hyper_params.dig("operator_type").eql?("bias_level") %>
 
     <div class="container-fluid py-4 ">
       <div class="row">
@@ -36,9 +36,7 @@
           <div class="modal-body">
             <h4>Please Choose One Of Following Operators: </h4>
               <%= f.hidden_field :modal_kernel %>
-              <%= f.hidden_field :modal_row %>
-              <%= f.hidden_field :modal_col %>
-              <% @operator_list.each do |operator_data| %>
+              <% @operator_list_cbv.each do |operator_data| %>
                 <%= f.radio_button :operator, operator_data[0], { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
                 <%= f.label :operator, operator_data[1], value: operator_data[0], class: "btn btn-outline-secondary" %>  
               <% end %>
@@ -70,7 +68,7 @@
       }
 
       function show_field_after_clicking_operator(event) {
-        if (event.value == "change-neuron") {
+        if (event.value == "change-neuron" || event.value == "change-bias-value") {
           $('#operator_type_value').removeClass("d-none");
         }
         else {
@@ -167,7 +165,7 @@
   <% end %>
 <% elsif params[:layer].include?("dense") %>
   
-  <% if @project.hyper_params.dig("operator_type").eql?("change-bias-value") %>
+  <% if @project.hyper_params.dig("operator_type").eql?("bias_level") %>
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col">
@@ -200,20 +198,10 @@
           <%= form_for :operator_type, url: start_mutation_testing_path(id: @project.id) do |f| %>
           <div class="modal-body">
             <h4>Please Choose One Of Following Operators: </h4>
-              <%= f.hidden_field :modal_prev %>
-              <%= f.hidden_field :modal_curr %>
+              <%= f.hidden_field :modal_kernel %>
 
-
-              <%= f.radio_button :operator, "change-edge", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
-              <%= f.label :operator, "Change weight", value: "change-edge", class: "btn btn-outline-secondary" %>
-              <%= f.radio_button :operator, "block-edge", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
-              <%= f.label :operator, "Block weight", value: "block-edge", class: "btn btn-outline-secondary" %>
-               <%= f.radio_button :operator, "mul-inverse-edge", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
-              <%= f.label :operator, "Multiplicative Inverse weight", value: "mul-inverse-edge", class: "btn btn-outline-secondary" %>
-               <%= f.radio_button :operator, "additive-inverse-edge", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
-              <%= f.label :operator, "Additive Inverse Weight", value: "additive-inverse-edge", class: "btn btn-outline-secondary" %>
-
-
+              <%= f.radio_button :operator, "change-bias-value", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
+              <%= f.label :operator, "Change Bias Value", value: "change-bias-value", class: "btn btn-outline-secondary" %>
               <br>
               <div class="row d-none" id = "operator_type_value"> 
                 <p>Please Select Value For Operator:</p>
@@ -232,13 +220,12 @@
       function open_mutation_modal(event) {
         prev = event.dataset.prev;
         curr = event.dataset.curr;
-        $('#operator_type_modal_prev').val(prev);
-        $('#operator_type_modal_curr').val(curr);
+        $('#operator_type_modal_kernel').val(curr);
         $('#mutationModal').modal('toggle');
       }
 
       function show_field_after_clicking_operator(event) {
-        if (event.value == "change-edge") {
+        if (event.value == "change-edge" || event.value == "change-bias-value" ) {
           $('#operator_type_value').removeClass("d-none");
         }
         else {

@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy select_layer select_mutant_location start_mutation_testing ]
+  before_action :set_project, only: %i[ show edit update destroy select_layer select_mutant_location start_mutation_testing restart_mutation_testing ]
   before_action :set_op_type_dict
   # GET /projects or /projects.json
   def index
     @projects = current_user&.projects&.configured
     @un_conf_projects = current_user&.projects&.unconfigured
+    @failed_projects = current_user&.projects&.error
   end
 
   # GET /projects/1 or /projects/1.json
@@ -84,7 +85,7 @@ class ProjectsController < ApplicationController
   end
 
   def select_layer
-    type_dict = {"neuron_level": "neuron_layers", "weight_level": "edge-layers", "change-bias-value": "bias_layers"}
+    type_dict = {"neuron_level": "neuron_layers", "weight_level": "edge-layers", "bias_level": "bias_layers"}
 
     @model_name = @project.hyper_params&.dig("model")
     @operator_type = @project.hyper_params&.dig("operator_type")
@@ -96,7 +97,9 @@ class ProjectsController < ApplicationController
     @project.hyper_params.update("layer": params[:layer])
     @project.save
     @operator_list = @backend_serice.get_operator_names(1)
-    if @project.hyper_params.dig("operator_type").eql?("change-bias-value")
+    @operator_list_cbv = {"change-bias-value"=>"Change Bias Value"}
+
+    if @project.hyper_params.dig("operator_type").eql?("bias_level")
       @kernels = @backend_serice.get_bias_weights(@project.hyper_params&.dig("model"), params[:layer])
     else
       @kernels = @backend_serice.get_layer_weights(@project.hyper_params&.dig("model"), params[:layer])
@@ -115,6 +118,13 @@ class ProjectsController < ApplicationController
       # response = @backend_serice.generate_mutant(model, layer, operator_params[:operator], operator_params[:op_value], operator_params[:modal_prev], operator_params[:modal_curr], 0)
       @project.hyper_params.update(operator_params: operator_params.to_h)
     end
+    @project.in_progress!
+    @project.save
+    MutationTestingJob.perform_later(@project)
+    return redirect_to projects_path(), notice: "Mutation Testing Started, You will be Notified when processing is complete."
+  end
+
+  def restart_mutation_testing
     @project.in_progress!
     @project.save
     MutationTestingJob.perform_later(@project)
@@ -145,6 +155,6 @@ class ProjectsController < ApplicationController
     end
 
     def set_op_type_dict
-      @op_type_dict ||= {"lenet5": ["neuron_level","weight_level", "change-bias-value"]}
+      @op_type_dict ||= {"lenet5": ["neuron_level","weight_level", "bias_level"]}
     end
 end
