@@ -280,7 +280,7 @@
           <i class="fa fa-arrow-down mx-4 pull-right"></i>
         </button>
       </h2>
-      <div id="flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%=index%>" data-bs-parent="#accordionFlushExample">
+      <div id="flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%=index%>" data-bs-parent="#accordionFlushExample2">
         <div class="accordion-body">
           <div class="row">
           <% model.matrices.each_with_index do |matrice, i| %>
@@ -309,7 +309,7 @@
           <i class="fa fa-arrow-down mx-4 pull-right"></i>
         </button>
       </h2>
-      <div id="tabular-flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="tabular-flush-heading<%=index%>" data-bs-parent="#accordionFlushExample">
+      <div id="tabular-flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="tabular-flush-heading<%=index%>" data-bs-parent="#accordionFlushExample1">
         <div class="accordion-body">
           <% model.matrices.each_with_index do |matrice, i| %>
             <% key = matrice.keys[0] %>

@@ -33,10 +33,11 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to select_layer_path(id: @project.id), notice: "Project was successfully created." }
+        format.html { redirect_to select_layer_path(id: @project.id), notice: "Project was successfully created, Please Configure it for further processing." }
         format.json { render :show, status: :created, location: @project }
       else
-        format.html { render :new }
+        flash[:alert] = "Unable to Create Project."
+        format.html { render :new, alert:  }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end

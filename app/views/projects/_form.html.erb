@@ -1,56 +1,59 @@
-<%= simple_form_for @project do |f| %>
-  <% if @project.errors.any? %>
-    <div class="text-danger">
-      <h4 class="text-danger">
-        <%= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"%>
-        <ul>
-          <% @project.errors.each do |error| %>
-            <li>
-              <%= error.full_message %>
-            </li>
-          <% end %>
-        </ul>
-      </h4>
-    </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :name %><br/>
-    <%= f.text_field :name, required: true , class: "border p-3 w-100 my-2", "data-parsley-required-message": "This is a Mandatory Field" %>
+<div class="row">
+  <div class="col-8">
+    <%= simple_form_for @project do |f| %>
+      <% if @project.errors.any? %>
+        <div class="text-danger">
+          <h4 class="text-danger">
+            <%= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"%>
+            <ul>
+              <% @project.errors.each do |error| %>
+                <li>
+                  <%= error.full_message %>
+                </li>
+              <% end %>
+            </ul>
+          </h4>
+        </div>
+      <% end %>
+      <div class="field">
+        <%= f.label :name %><br/>
+        <%= f.text_field :name, required: true , class: "border p-3 w-100 my-2", "data-parsley-required-message": "This is a Mandatory Field" %>
+      </div>
+      <div class="field">
+        <%= f.label :description %><br/>
+        <%= f.text_area :description, required: true , class: "border p-3 w-100 my-2", "data-parsley-required-message": "This is a Mandatory Field" %>
+      </div>
+
+
+      <div class="field">
+        <%= f.label :model %><br/>
+        <%= f.select :model, options_for_select(@model_names), {prompt: "Select a Model"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+      </div>
+
+      <div class="field">
+        <% op_types = @operator_types&.any? ? @operator_types : [] %>
+        <%= f.label :operator_type %><br/>
+        <%= f.select :operator_type, options_for_select(op_types, f.object.hyper_params.dig("operator_type")), {prompt: "Select an Operator Type"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+      </div>
+
+      <!-- <div class="field"> -->
+        <%#= f.label :operator_name %>
+        <%#= f.select :operator_name, options_for_select([f.object.hyper_params.dig("operator_name")]), {prompt: "Select an Operator Name"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
+      <!-- </div> -->
+
+      <div class="field">
+        <%= f.label :k_value %><br/>
+        <%= f.number_field :k_value, in: 6..150, class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field" %>
+      </div>
+
+      <%= f.hidden_field :user_id %>
+          
+      <div class="actions my-3">
+        <%= f.submit "Proceed to Next Step", class: "d-block py-3 px-4 font-weight-bold btn btn-secondary" %>
+      </div>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br/>
-    <%= f.text_area :description, required: true , class: "border p-3 w-100 my-2", "data-parsley-required-message": "This is a Mandatory Field" %>
-  </div>
-
-
-  <div class="field">
-    <%= f.label :model %><br/>
-    <%= f.select :model, options_for_select(@model_names), {prompt: "Select a Model"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
-  </div>
-
-  <div class="field">
-    <% op_types = @operator_types&.any? ? @operator_types : [] %>
-    <%= f.label :operator_type %><br/>
-    <%= f.select :operator_type, options_for_select(op_types, f.object.hyper_params.dig("operator_type")), {prompt: "Select an Operator Type"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
-  </div>
-
-  <!-- <div class="field"> -->
-    <%#= f.label :operator_name %>
-    <%#= f.select :operator_name, options_for_select([f.object.hyper_params.dig("operator_name")]), {prompt: "Select an Operator Name"}, { class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field"} %>
-  <!-- </div> -->
-
-  <div class="field">
-    <%= f.label :k_value %><br/>
-    <%= f.number_field :k_value, in: 80..150, min: 5, class: 'form-control', required: true, "data-parsley-required-message": "This is a Mandatory Field" %>
-  </div>
-
-  <%= f.hidden_field :user_id %>
-      
-  <div class="actions my-3">
-    <%= f.submit "Proceed to Next Step", class: "d-block py-3 px-4 font-weight-bold btn btn-secondary" %>
-  </div>
-<% end %>
-
+</div>
 <script type="text/javascript">
   $('body').on('change', '#project_model', function(event) {
     if ($(this).val() == '')
@@ -71,16 +74,16 @@
     })
   });
 
-  $('body').on('click', '.make_notification_seen', function(event) {
-    $.ajax({
-      url: "/make_notifications_seen/",
-      type: "PUT",
-      data: { },
-      success: function(data) {
-        $("#unseen_count").html('');
-      }
-    })
-  });
+  // $('body').on('click', '.make_notification_seen', function(event) {
+  //   $.ajax({
+  //     url: "/make_notifications_seen/",
+  //     type: "PUT",
+  //     data: { },
+  //     success: function(data) {
+  //       $("#unseen_count").html('');
+  //     }
+  //   })
+  // });
 
   // $('body').on('change', '#project_operator_type', function(event) {
   //   if ($(this).val() == '')
