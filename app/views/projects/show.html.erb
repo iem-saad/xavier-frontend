@@ -271,57 +271,58 @@
 <div class="row card mt-4 m-1">
   <h3 class="p-3 mx-3">Mutation Analysis (Graphical)</h3>
   <div class="accordion accordion-flush" id="accordionFlushExample">
-  <% @project.original_models.each_with_index do |model, index| %>
-  <% next if model.mutated_model.nil? %>
-    <div class="accordion-item card-body p-3">
-      <h2 class="accordion-header" id="flush-heading<%=index%>">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=index%>" aria-expanded="false" aria-controls="flush-collapse<%=index%>">
-          <%= "#{@project.name}-#{@project.hyper_params&.dig("model")}-#{index+1}" %>
-          <i class="fa fa-arrow-down mx-4 pull-right"></i>
-        </button>
-      </h2>
-      <div id="flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%=index%>" data-bs-parent="#accordionFlushExample2">
-        <div class="accordion-body">
-          <div class="row">
-          <% model.matrices.each_with_index do |matrice, i| %>
-            <% key = matrice.keys[0] %>
-            <% org_data = matrice[key].values.map(&:to_f) %>
-            <% mutated_data = model.mutated_model.matrices[i][key].values.map(&:to_f) %>
-            <%= render 'linear_graph', type: key, id: key, org_data: org_data, mutated_data: mutated_data, index: index %>
-          <% end %>
+    <%["accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index|%>
+      <div class="accordion-item card-body p-3">
+        <h2 class="accordion-header" id="flush-heading<%=m_index%>">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=m_index%>" aria-expanded="false" aria-controls="flush-collapse<%=m_index%>">
+            <%= "#{@project.hyper_params&.dig("model")}-#{matric}" %>
+            <i class="fa fa-arrow-down mx-4 pull-right"></i>
+          </button>
+        </h2>
+        <div id="flush-collapse<%=m_index%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%=m_index%>" data-bs-parent="#accordionFlushExample2">
+          <div class="accordion-body">
+            <div class="row">
+              <% @project.original_models.each_with_index do |model, index| %>
+                <% next if model.mutated_model.nil? %>
+                <% org_data = model.matrices[m_index][matric].values.map(&:to_f) %>
+                <% mutated_data = model.mutated_model.matrices[m_index][matric].values.map(&:to_f) %>
+                <%= render 'linear_graph', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
   </div>
 </div>
+
+
 
 <div class="row card mt-4 m-1">
   <h3 class="p-3 mx-3">Mutation Analysis (Tabular)</h3>
   <div class="accordion accordion-flush" id="accordionFlushExample">
-  <% @project.original_models.each_with_index do |model, index| %>
-  <% next if model.mutated_model.nil? %>
-    <div class="accordion-item card-body p-3">
-      <h2 class="accordion-header" id="tabular-flush-heading<%=index%>">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tabular-flush-collapse<%=index%>" aria-expanded="false" aria-controls="tabular-flush-collapse<%=index%>">
-          <%= "#{@project.name}-#{@project.hyper_params&.dig("model")}-#{index+1}" %>
-          <i class="fa fa-arrow-down mx-4 pull-right"></i>
-        </button>
-      </h2>
-      <div id="tabular-flush-collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="tabular-flush-heading<%=index%>" data-bs-parent="#accordionFlushExample1">
-        <div class="accordion-body">
-          <% model.matrices.each_with_index do |matrice, i| %>
-            <% key = matrice.keys[0] %>
-            <% org_data = matrice[key].values.map(&:to_f) %>
-            <% mutated_data = model.mutated_model.matrices[i][key].values.map(&:to_f) %>
-
-            <%= render 'tabular_analysis_tile', org_vals: org_data, mutated_vals: mutated_data, title: key %>
-          <% end %>
+    <%["accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index|%>
+      <div class="accordion-item card-body p-3">
+        <h2 class="accordion-header" id="tabular-flush-heading<%=m_index%>">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tabular-flush-collapse<%=m_index%>" aria-expanded="false" aria-controls="tabular-flush-collapse<%=m_index%>">
+            <%= "#{@project.hyper_params&.dig("model")}-#{matric}" %>
+            <i class="fa fa-arrow-down mx-4 pull-right"></i>
+          </button>
+        </h2>
+        <div id="tabular-flush-collapse<%=m_index%>" class="accordion-collapse collapse" aria-labelledby="tabular-flush-heading<%=m_index%>" data-bs-parent="#accordionFlushExample2">
+          <div class="accordion-body">
+            <div class="row">
+              <% @project.original_models.each_with_index do |model, index| %>
+                <% next if model.mutated_model.nil? %>
+                <% org_data = model.matrices[m_index][matric].values.map(&:to_f) %>
+                <% mutated_data = model.mutated_model.matrices[m_index][matric].values.map(&:to_f) %>
+                <%= render 'tabular_analysis_tile', org_vals: org_data, mutated_vals: mutated_data, title: matric, index: index %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
   </div>
 </div>
 <% end %>
