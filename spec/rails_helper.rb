@@ -6,6 +6,7 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 require 'capybara/rspec'
+require "devise"
 require_relative 'support/factory_bot'
 require_relative 'support/chrome'
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -59,6 +60,8 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Warden::Test::Helpers
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
