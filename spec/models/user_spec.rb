@@ -5,8 +5,8 @@ require "rails_helper"
 # - validates password complexity
 
 RSpec.describe User, type: :model do
-  let(:user){build(:user)}
-  let(:user_2){build(:user)}
+  let(:user) {build(:user)}
+  let(:user_2) {build(:user)}
 
   context "validations" do
     it 'is valid' do
