@@ -85,4 +85,8 @@ group :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
+  gem 'shoulda-matchers', require: false
+  gem 'rails-controller-testing'
+  gem 'database_cleaner'
+  gem 'simplecov', require: false
 end
