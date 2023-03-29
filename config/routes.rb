@@ -33,4 +33,6 @@ Rails.application.routes.draw do
   get '/make_notifications_seen/', to: "projects#make_notifications_seen", as: "make_notifications_seen"
   get "mutation_analysis", to: "projects#mutation_analysis" 
   get "/projects/:id/restart_mutation_testing", to: "projects#restart_mutation_testing", as: 'restart_mutation_testing'
+  get "/models/:id/download_org_model", to: "model#download_org_model", as: 'download_org_model'
+  get "/models/:id/download_mutated_model", to: "model#download_mutated_model", as: 'download_mutated_model'
 end
