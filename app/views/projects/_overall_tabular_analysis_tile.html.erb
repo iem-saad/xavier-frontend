@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-11">
+    <div class="card mb-4">
+      <div class="card-header pb-0">
+        <h5><%= title.titlecase %> Comparison Of Original & Mutated Model-<%= index + 1 %>.</h5>
+      </div>
+      <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center justify-content-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2"><%= title.titlecase %></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><p class="text-sm font-weight-bold mb-0">Original Model <%= index + 1 %></p></td>
+                <td><p class="text-sm font-weight-bold mb-0"> <%= org_val %> </p></td>
+              </tr>
+              <tr>
+                <td><p class="text-sm font-weight-bold mb-0">Mutated Model <%= index + 1 %></p></td>
+                <td><p class="text-sm font-weight-bold mb-0"> <%= mutated_val %>
+                  <% if mutated_val < org_val %>
+                    <i class="px-2 bi bi-arrow-down-square-fill text-danger fw-bold"></i>
+                  <% elsif mutated_val > org_val %>
+                    <i class="px-2 bi bi-arrow-up-square-fill text-success fw-bold"></i>
+                  <% end %>
+                </p></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

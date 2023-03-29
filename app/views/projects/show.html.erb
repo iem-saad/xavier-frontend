@@ -272,7 +272,7 @@
   <div class="row card mt-4 m-1">
     <h3 class="p-3 mx-3">Mutation Analysis (Graphical)</h3>
     <div class="accordion accordion-flush" id="accordionFlushExample">
-      <%["accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index|%>
+      <%["overall_accuracy", "overall_precision", "accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index|%>
         <div class="accordion-item card-body p-3">
           <h2 class="accordion-header" id="flush-heading<%=m_index%>">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=m_index%>" aria-expanded="false" aria-controls="flush-collapse<%=m_index%>">
@@ -287,7 +287,11 @@
                   <% next if model.mutated_model.nil? %>
                   <% org_data = model.matrices[m_index][matric].values.map(&:to_f) %>
                   <% mutated_data = model.mutated_model.matrices[m_index][matric].values.map(&:to_f) %>
-                  <%= render 'linear_graph', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index %>
+                  <% if matric.include?("overall") %>
+                    <%= render 'bar_chart', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index %>
+                  <% else %>
+                    <%= render 'linear_graph', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
@@ -300,7 +304,7 @@
   <div class="row card mt-4 m-1">
     <h3 class="p-3 mx-3">Mutation Analysis (Tabular)</h3>
     <div class="accordion accordion-flush" id="accordionFlushExample">
-      <%["accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index|%>
+      <%["overall_accuracy", "overall_precision", "accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index|%>
         <div class="accordion-item card-body p-3">
           <h2 class="accordion-header" id="tabular-flush-heading<%=m_index%>">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tabular-flush-collapse<%=m_index%>" aria-expanded="false" aria-controls="tabular-flush-collapse<%=m_index%>">
@@ -315,7 +319,11 @@
                   <% next if model.mutated_model.nil? %>
                   <% org_data = model.matrices[m_index][matric].values.map(&:to_f) %>
                   <% mutated_data = model.mutated_model.matrices[m_index][matric].values.map(&:to_f) %>
-                  <%= render 'tabular_analysis_tile', org_vals: org_data, mutated_vals: mutated_data, title: matric, index: index %>
+                  <% if matric.include?("overall") %>
+                    <%= render 'overall_tabular_analysis_tile', org_val: org_data[0], mutated_val: mutated_data[0], title: matric, index: index %>
+                  <% else %>
+                    <%= render 'tabular_analysis_tile', org_vals: org_data, mutated_vals: mutated_data, title: matric, index: index %>
+                  <% end %>
                 <% end %>
               </div>
             </div>
