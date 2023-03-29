@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
+    @backend_serice.is_backend_live
   end
 
   # GET /projects/new

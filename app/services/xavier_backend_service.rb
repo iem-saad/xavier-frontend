@@ -63,4 +63,13 @@ class XavierBackendService < ApplicationService
   def start_mutation_testing(p_id)
     res = self.class.get("/run/#{p_id}", {read_timeout: 1000000})
   end
+
+  def is_backend_live
+    begin
+      self.class.get("/", {})
+      return true
+    rescue => e
+      return false
+    end
+  end
 end
