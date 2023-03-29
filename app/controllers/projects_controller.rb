@@ -97,7 +97,7 @@ class ProjectsController < ApplicationController
     @project.hyper_params.update("layer": params[:layer])
     @project.save
     @operator_list = @backend_serice.get_operator_names(1)
-    @operator_list_cbv = {"change-bias-value"=>"Change Bias Value"}
+    @operator_list_cbv = {"change-bias-value": "Change Bias Value", "block-bias-value": "Block Bias Value", "mul-inverse-bias-value": "Multiplicative Inverse of Bias Value", "additive-inverse-bias-value": "Additive Inverse of Bias Value"}
 
     if @project.hyper_params.dig("operator_type").eql?("bias_level")
       @kernels = @backend_serice.get_bias_weights(@project.hyper_params&.dig("model"), params[:layer])

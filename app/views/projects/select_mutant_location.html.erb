@@ -199,9 +199,12 @@
           <div class="modal-body">
             <h4>Please Choose One Of Following Operators: </h4>
               <%= f.hidden_field :modal_kernel %>
-
-              <%= f.radio_button :operator, "change-bias-value", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
-              <%= f.label :operator, "Change Bias Value", value: "change-bias-value", class: "btn btn-outline-secondary" %>
+              <% @operator_list_cbv.each do |operator_data| %>
+                <%= f.radio_button :operator, operator_data[0], { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
+                <%= f.label :operator, operator_data[1], value: operator_data[0], class: "btn btn-outline-secondary" %>  
+              <% end %>
+              <%#= f.radio_button :operator, "change-bias-value", { checked: false, class: "btn-check p-2 select_input", onclick: "show_field_after_clicking_operator(this)", required: true } %>
+              <%#= f.label :operator, "Change Bias Value", value: "change-bias-value", class: "btn btn-outline-secondary" %>
               <br>
               <div class="row d-none" id = "operator_type_value"> 
                 <p>Please Select Value For Operator:</p>
