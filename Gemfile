@@ -53,7 +53,10 @@ gem 'foreman', '~> 0.87.2'
 gem 'httparty', '~> 0.20.0'
 gem "pry"
 gem 'simple_form'
-
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary-edge'
+gem 'grover'
 # Use Sass to process CSS
 gem "sassc-rails"
 

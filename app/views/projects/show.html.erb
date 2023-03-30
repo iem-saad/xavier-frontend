@@ -273,6 +273,9 @@
         Download Models
       </button>
     </div>
+    <div class="col-2">
+      <%=link_to 'Click to Export Tabular Analysis', export_analysis_report_path(id: @project.id, format: :pdf), target: '_blank', class: "btn btn-secondary mx-3"%>
+    </div>
   </div>
 </div>
 <div id="analysis-grid" class="d-none">

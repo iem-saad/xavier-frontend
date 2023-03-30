@@ -82,5 +82,5 @@ test:
 production:
   <<: *default
   database: xavier_frontend_production
-  username: xavier_frontend
-  password: <%= ENV["XAVIER_FRONTEND_DATABASE_PASSWORD"] %>
+  username: saad
+  password: saad123

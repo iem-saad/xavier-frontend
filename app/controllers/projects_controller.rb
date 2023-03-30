@@ -108,6 +108,22 @@ class ProjectsController < ApplicationController
     return redirect_to projects_path, alert: "Ops! Weights Not Found!" unless @kernels.present?
   end
 
+  def export_analysis_report
+    @project = Project.find(params[:id])
+    html_string = render_to_string({
+       template: 'projects/export_analysis_report',
+       locals: { :@project => @project }
+    })
+    pdf = Grover.new(html_string, format: 'A4').to_pdf
+    send_data pdf, filename: "Project #{@project.name} Analysis Report" + Time.now.strftime('%v').to_s, type: "application/pdf"
+    # respond_to do |format|
+    #  format.pdf do
+    #    # render template: 'export_pdf', pdf: "Project #{project.name} Analysis Report" + Time.now.strftime('%v %H:%M:%S').to_s, javascript_delay: 10000, layout: 'pdf.html.erb', disposition: 'inline'
+    #     render :pdf => "export_pdf", :encoding => 'utf8', page_size: 'A3', margin: {top: 10, right: 1, bottom: 10, left: 2}, layout: 'pdf'
+    #  end
+    # end
+  end
+
   def start_mutation_testing
     return redirect_to select_mutant_location_path(id: @project.id), alert: "Error! Operator Value Not Selected!" if operator_params[:operator].eql?("change-neuron") && !operator_params[:op_value].present?
     layer = @project.hyper_params&.dig("layer")
