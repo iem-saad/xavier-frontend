@@ -35,4 +35,5 @@ Rails.application.routes.draw do
   get "/projects/:id/restart_mutation_testing", to: "projects#restart_mutation_testing", as: 'restart_mutation_testing'
   get "/models/:id/download_org_model", to: "model#download_org_model", as: 'download_org_model'
   get "/models/:id/download_mutated_model", to: "model#download_mutated_model", as: 'download_mutated_model'
+  get "faq/how_to_use_exported_model", to: "faq#use_exported_model", as: 'use_exported_model'
 end
