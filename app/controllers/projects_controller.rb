@@ -110,18 +110,21 @@ class ProjectsController < ApplicationController
 
   def export_analysis_report
     @project = Project.find(params[:id])
-    html_string = render_to_string({
-       template: 'projects/export_analysis_report',
-       locals: { :@project => @project }
-    })
-    pdf = Grover.new(html_string, format: 'A4').to_pdf
-    send_data pdf, filename: "Project #{@project.name} Analysis Report" + Time.now.strftime('%v').to_s, type: "application/pdf"
-    # respond_to do |format|
-    #  format.pdf do
-    #    # render template: 'export_pdf', pdf: "Project #{project.name} Analysis Report" + Time.now.strftime('%v %H:%M:%S').to_s, javascript_delay: 10000, layout: 'pdf.html.erb', disposition: 'inline'
-    #     render :pdf => "export_pdf", :encoding => 'utf8', page_size: 'A3', margin: {top: 10, right: 1, bottom: 10, left: 2}, layout: 'pdf'
-    #  end
-    # end
+   
+    respond_to do |format|
+      format.pdf do
+        html_string = render_to_string({
+          template: 'projects/export_analysis_report',
+          locals: { :@project => @project }
+        })
+        style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
+        pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
+        send_data pdf, filename: "Project #{@project.name} Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
+      end
+      format.html do
+        render :export_analysis_report
+      end
+    end
   end
 
   def start_mutation_testing

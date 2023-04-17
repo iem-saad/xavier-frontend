@@ -33,3 +33,11 @@
 # Ignore application config.
 /.env.development
 /.env.*local
+
+# Ignore test-case coverage report.
+/coverage
+
+# Ignore node modules
+/node_modules
+
+
