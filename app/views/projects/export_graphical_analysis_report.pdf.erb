@@ -1,0 +1,341 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <style>
+      .row:before, .row:after {content: " ";display: table;}
+      .row:after {clear: both;}
+      .row:before, .row:after {content: " ";display: table;}
+      .row:after {clear: both;}
+
+      .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-xs-5, .col-xs-7, .col-xs-1, .col-xs-10{float:left; box-sizing: border-box; padding-left:1%;}
+      .col-md-2{width:15%;}
+      .col-md-3{width:24%;}
+      .col-md-4{width: 32%;}
+      .col-md-5{width: 40%;}
+      .col-md-6{width:49%;}
+      .col-md-7{width:58%;}
+      .col-md-8{width:65%;}
+      .col-md-9{width:74%;}
+      .col-md-10{width:82%;}
+      .col-xs-5 {width: 40%;}
+      .col-xs-7 {width: 57%;}
+
+      .col-xs-1{width:10%;}
+      .col-xs-10{width:78%;}
+
+      .nowrap{white-space: nowrap;}
+      .nav-tabs{display:none;}
+      .tab-content .tab-pane{margin-top:15px;}
+
+      .thumb img{max-width:100%;}
+
+      .for_pdf_only{display:block;}
+      .page-break{ display:block; clear:both; page-break-after:always; position:relative;}
+      .col-1-3{width:33%;float:left;}
+      .col-2-3{width:66%;float:right;}
+      .padded{padding:5px;}
+      body{font-size:11px; color:#333333;line-height:1.2em;font-family: Arial, Helvetica, sans-serif;}
+      canvas{display:block;}
+      .text-center{text-align: center;}
+      p{font-size:11px; line-height:1.2em; margin:2px 0 4px 0;}
+      .pt-logo{width:150px;height:45px;}
+      .m-b{margin-bottom:15px;}
+      h1,h2,h3,h4{ color: #000000; line-height:1.25em;}
+      h1{font-size:18px; margin:10px 0 7px 0;}
+      h2{font-size:17px; margin:8px 0 5px 0;}
+      h3{font-size:16px; margin:7px 0 4px 0;}
+      h4{font-size:14px; margin:6px 0 3px 0;}
+      img{max-width:100%;}
+      img.responsive-image{max-width:100%;height:auto;}
+      img.bordered{border:3px solid #DEDEDE;}
+      hr{border:0; height:0; border-top:0; border-bottom:1px solid #DDDDDD;}
+      table{width:100%; border-collapse:collapse; margin:0;border-spacing: 0;max-width: 100%;}
+      tr.captbl{background: #EEE;}
+      td{font-size:12px; text-align: center;border:1px solid #dddddd;border-top-left-radius: 0;border-top-right-radius: 0;}
+      td.left{text-align: left;}
+      .code_service_label{
+        display: block;
+        max-width: 350px;
+        text-align: left;
+      }
+
+      .label{
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+      }
+      .label-danger{
+        background-color: #d9534f;
+      }
+      .label-primary{
+        background-color: #337ab7;
+      }
+      .label-default{
+        background-color: #777;
+      }
+
+    </style>
+    <%= wicked_pdf_stylesheet_link_tag "application" -%>
+
+  </head>
+  <body>
+    <div class="row m-b">
+      <div class="col-xs-10 text-center"><%= image_tag "data:image/png;base64,#{Base64.encode64(File.read(Rails.root.join('app', 'assets', 'images', 'xavier.png')))}", style: "height 100px; width: 100px;" %></div>
+    </div>
+    <div class="row m-b">
+      <div class="col-xs-10 text-center"><h4 style="color:#002060"><%= @project.name %> Tabular Analysis Report</h4></div>
+    </div>
+    <div class="row m-b">
+      <div class="col-xs-10 text-center">Report Generated on <%= l(Date.today, format: :long) %></div>
+    </div>
+
+    <div class="row" style="margin: 10px;">
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Project Name</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.name %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-file text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Original Models</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.original_models.count %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-sitemap text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Mutated Models</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.original_models.count %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-bacterium text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Value of K</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.hyper_params.dig("k_value") %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-refresh text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row my-3" style="margin: 10px;">
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Project Status</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.status %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-signal text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Model Selected</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.hyper_params.dig("model") %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-atom text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Mutation at layer</h5>
+                  <p class="text-sm mb-0 font-weight-bold"><%= @project.hyper_params.dig("layer") %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-layer-group text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-8">
+                <div class="numbers">
+                  <h5 class="font-weight-bolder mb-0">Operator Applied</h5>
+                  <p class="text-sm mb-0 text-capitalize font-weight-bold"><%= @project.hyper_params.dig("operator_type") %></p>
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                  <i class="fa fa-calculator text-lg opacity-10" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row mt-4" style="margin: 10px;">
+      <div class="col-lg-7 mb-lg-0 mb-4">
+        <div class="card">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="d-flex flex-column h-100">
+                  <h5 class="font-weight-bolder">Project Description</h5>
+                  <p class="mb-5"><%= @project.description %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card h-100 p-3">
+          <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100">
+            <span class="mask bg-gradient-primary"></span>
+            <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
+              <h5 class=" font-weight-bolder mb-4 pt-2">Operator Configurations are as following.</h5>
+              <p class=""><%= operator_conf(@project) %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row card" style="margin-left: 20px; margin-right: 20px;">
+      <h3 class="p-3 mx-3">Results</h3>
+      <p class="mx-3">Status: <%= @project.results.dig("status") %></p>
+      <p class="mx-3">Beta: <%= @project.results.dig("Beta") %></p>
+      <p class="mx-3">P-Value: <%= @project.results.dig("P-Value") %></p>
+      <p class="mx-3">Effect Size: <%= @project.results.dig("Effect Size") %></p>
+      <% if @project.results.dig("Mutation") %>
+        <p class="mx-3 text-success">Mutation is Successfully Killed!</p>
+      <% else %>
+        <p class="mx-3 text-danger">Ops, Mutation is Not Killed!</p>
+      <% end %>
+    </div>
+    <div id="analysis-grid" style="margin-left: 20px; margin-right: 20px; page-break-before: always;">
+      <div class="row">
+        <h3 class="p-3 mx-3">Mutation Analysis (Graphical)</h3>
+        <div>
+          <%["overall_accuracy", "overall_precision", "accuracy", "specificity", "sensitivity", "precision", "recall", "f1_score", "AUC", "F_beta"].each_with_index do |matric, m_index| %>
+            <div class="row">
+              <% @project.project_report_chart_assets.where(matric_type: matric).order(model_no: :asc).each_with_index do |asset, index| %>
+                <% next if asset.img_string.nil? %>
+                <% if matric.include?("overall") %>
+                  <div class="<%= (index+1)%6==0 && index != 0 ? 'page-break': '' %> col-6">
+                    <div class="card mb-4">
+                      <div class="card-header pb-0">
+                        <h5><%= matric.titlecase %> Comparison Of Original & Mutated Model-<%= index + 1 %>.</h5>
+                      </div>
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                          <img src="<%=asset.img_string%>">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% else %>
+                  <div class="<%= (index+1)%6==0 && index != 0 ? 'page-break': '' %> col-6">
+                    <div class="card mb-4">
+                      <div class="card-header pb-0">
+                        <h5><%= matric.titlecase %> Comparison Of Original & Mutated Model-<%= index + 1 %>.</h5>
+                      </div>
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                          <img src="<%=asset.img_string%>">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

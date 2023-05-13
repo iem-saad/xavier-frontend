@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :original_models, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :project_report_chart_assets, dependent: :destroy
   validate :value_of_k
   validates :name, presence: true
   

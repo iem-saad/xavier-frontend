@@ -14,21 +14,23 @@
 <script type="text/javascript">
   (function() {
     window.saveProjectReportChartResourceBar = function(uid, r_type, index, pid, image_data) {
-      return $.ajax({
-        url: '/projects/' + pid + '/report_chart_assets',
-        data: {
-          user_id: uid,
-          project_id: pid,
-          r_type: r_type,
-          index: index,
-          image_data: image_data
-        },
-        type: "POST",
-        dataType: 'text',
-        error: function(xhr, textStatus, errorThrown) {
-          return console.log("PDF-Export AJAX Error: " + textStatus);
-        }
-      });
+      if (image_data && image_data != 'data:,') {
+        return $.ajax({
+          url: '/projects/' + pid + '/report_chart_assets',
+          data: {
+            user_id: uid,
+            project_id: pid,
+            r_type: r_type,
+            index: index,
+            image_data: image_data
+          },
+          type: "POST",
+          dataType: 'text',
+          error: function(xhr, textStatus, errorThrown) {
+            return console.log("PDF-Export AJAX Error: " + textStatus);
+          }
+        });
+      }
     };
 
   }).call(this);
@@ -53,7 +55,7 @@
         }
       },
       animation: {
-        duration: 0,
+        duration: 1,
         onComplete: function () {
           saveProjectReportChartResourceBar("<%=current_user.id%>", $(this.canvas).data('report-type'), $(this.canvas).data('report-index'), $(this.canvas).data('project-id'), this.canvas.toDataURL('image/png'));
         }

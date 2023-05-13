@@ -119,10 +119,10 @@ class ProjectsController < ApplicationController
         })
         style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
         pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
-        send_data pdf, filename: "Project #{@project.name} Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
+        send_data pdf, filename: "Project #{@project.name} Tabular Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
       end
       format.html do
-        render :export_analysis_report
+        render :export_tabular_analysis_report
       end
     end
   end
@@ -133,20 +133,27 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.pdf do
         html_string = render_to_string({
-          template: 'projects/export_tabular_analysis_report',
+          template: 'projects/export_graphical_analysis_report',
           locals: { :@project => @project }
         })
         style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
         pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
-        send_data pdf, filename: "Project #{@project.name} Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
+        send_data pdf, filename: "Project #{@project.name} Graphical Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
       end
       format.html do
-        render :export_analysis_report
+        render :export_graphical_analysis_report
       end
     end
   end
 
   def report_chart_assets
+    img_asset = ProjectReportChartAsset.where(user_id: params[:user_id], project_id: params[:project_id], matric_type: params[:r_type], model_no: params[:index]).first_or_initialize
+    if params[:image_data].length > 20
+      img_asset.img_string = params[:image_data]
+      img_asset.save!
+    end
+
+    render plain: 'OK'
   end
 
   def start_mutation_testing

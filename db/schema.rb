@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_05_103315) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_13_160846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_05_103315) do
     t.index ["project_id"], name: "index_original_models_on_project_id"
   end
 
+  create_table "project_report_chart_assets", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.string "matric_type", null: false
+    t.integer "model_no", null: false
+    t.text "img_string", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_report_chart_assets_on_project_id"
+    t.index ["user_id"], name: "index_project_report_chart_assets_on_user_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
@@ -74,5 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_05_103315) do
 
   add_foreign_key "mutated_models", "original_models"
   add_foreign_key "original_models", "projects"
+  add_foreign_key "project_report_chart_assets", "projects"
+  add_foreign_key "project_report_chart_assets", "users"
   add_foreign_key "projects", "users"
 end
