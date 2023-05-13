@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy select_layer select_mutant_location start_mutation_testing restart_mutation_testing ]
   before_action :set_op_type_dict
+  skip_before_action :verify_authenticity_token, only: [:report_chart_assets]
 
   # GET /projects or /projects.json
   def index
@@ -143,6 +144,9 @@ class ProjectsController < ApplicationController
         render :export_analysis_report
       end
     end
+  end
+
+  def report_chart_assets
   end
 
   def start_mutation_testing

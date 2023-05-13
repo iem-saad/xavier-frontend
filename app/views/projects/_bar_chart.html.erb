@@ -5,13 +5,33 @@
     </div>
     <div class="card-body p-3">
       <div class="chart">
-        <canvas id="chart-bars-<%= id %>-<%= index %>" class="chart-canvas" height="400"></canvas>
+        <canvas id="chart-bars-<%= id %>-<%= index %>" class="chart-canvas" height="400" data-report-type="<%= type %>" data-report-index="<%= index %>" data-project-id="<%=project_id%>"></canvas>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
+  (function() {
+    window.saveProjectReportChartResourceBar = function(uid, r_type, index, pid, image_data) {
+      return $.ajax({
+        url: '/projects/' + pid + '/report_chart_assets',
+        data: {
+          user_id: uid,
+          project_id: pid,
+          r_type: r_type,
+          index: index,
+          image_data: image_data
+        },
+        type: "POST",
+        dataType: 'text',
+        error: function(xhr, textStatus, errorThrown) {
+          return console.log("PDF-Export AJAX Error: " + textStatus);
+        }
+      });
+    };
+
+  }).call(this);
 
   var ctx = document.getElementById("chart-bars-<%= id %>-<%= index %>").getContext("2d");
 
@@ -30,6 +50,12 @@
       plugins: {
         legend: {
           display: false,
+        }
+      },
+      animation: {
+        duration: 0,
+        onComplete: function () {
+          saveProjectReportChartResourceBar("<%=current_user.id%>", $(this.canvas).data('report-type'), $(this.canvas).data('report-index'), $(this.canvas).data('project-id'), this.canvas.toDataURL('image/png'));
         }
       },
       interaction: {

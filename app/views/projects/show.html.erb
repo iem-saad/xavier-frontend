@@ -332,9 +332,9 @@
                   <% org_data = model.matrices[m_index][matric].values.map(&:to_f) %>
                   <% mutated_data = model.mutated_model.matrices[m_index][matric].values.map(&:to_f) %>
                   <% if matric.include?("overall") %>
-                    <%= render 'bar_chart', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index %>
+                    <%= render 'bar_chart', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index, project_id: @project.id %>
                   <% else %>
-                    <%= render 'linear_graph', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index %>
+                    <%= render 'linear_graph', type: matric, id: matric, org_data: org_data, mutated_data: mutated_data, index: index, project_id: @project.id %>
                   <% end %>
                 <% end %>
               </div>

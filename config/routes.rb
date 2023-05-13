@@ -38,4 +38,5 @@ Rails.application.routes.draw do
   get "faq/how_to_use_exported_model", to: "faq#use_exported_model", as: 'use_exported_model'
   get "/projects/:id/export_tabular_analysis_report", to: "projects#export_tabular_analysis_report", as: 'export_tabular_analysis_report'
   get "/projects/:id/export_graphical_analysis_report", to: "projects#export_graphical_analysis_report", as: 'export_graphical_analysis_report'
+  post "/projects/:id/report_chart_assets", to: "projects#report_chart_assets", as: 'report_chart_assets'
 end
