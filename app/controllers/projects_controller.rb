@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy select_layer select_mutant_location start_mutation_testing restart_mutation_testing ]
   before_action :set_op_type_dict
+
   # GET /projects or /projects.json
   def index
     @projects = current_user&.projects&.configured
@@ -69,7 +70,6 @@ class ProjectsController < ApplicationController
   end
 
   def get_model_applicable_operator
-
     respond_to do |format|
       format.json { render json: @op_type_dict[params[:model_name].to_sym].to_json }
     end
@@ -78,7 +78,6 @@ class ProjectsController < ApplicationController
   def get_model_applicable_operator_names
     op_name_dict = {"lenet5": {"neuron_level": 1, "weight_level": 2}}
     @operator_list = @backend_serice.get_operator_names(op_name_dict[params[:model_name].to_sym][params[:operator].to_sym])
-
 
     respond_to do |format|
       format.json { render json: @operator_list.to_json }
@@ -108,13 +107,32 @@ class ProjectsController < ApplicationController
     return redirect_to projects_path, alert: "Ops! Weights Not Found!" unless @kernels.present?
   end
 
-  def export_analysis_report
+  def export_tabular_analysis_report
     @project = Project.find(params[:id])
    
     respond_to do |format|
       format.pdf do
         html_string = render_to_string({
-          template: 'projects/export_analysis_report',
+          template: 'projects/export_tabular_analysis_report',
+          locals: { :@project => @project }
+        })
+        style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
+        pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
+        send_data pdf, filename: "Project #{@project.name} Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
+      end
+      format.html do
+        render :export_analysis_report
+      end
+    end
+  end
+
+  def export_graphical_analysis_report
+    @project = Project.find(params[:id])
+   
+    respond_to do |format|
+      format.pdf do
+        html_string = render_to_string({
+          template: 'projects/export_tabular_analysis_report',
           locals: { :@project => @project }
         })
         style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]

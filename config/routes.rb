@@ -36,5 +36,6 @@ Rails.application.routes.draw do
   get "/models/:id/download_org_model", to: "model#download_org_model", as: 'download_org_model'
   get "/models/:id/download_mutated_model", to: "model#download_mutated_model", as: 'download_mutated_model'
   get "faq/how_to_use_exported_model", to: "faq#use_exported_model", as: 'use_exported_model'
-  get "/projects/:id/export_analysis_report", to: "projects#export_analysis_report", as: 'export_analysis_report'
+  get "/projects/:id/export_tabular_analysis_report", to: "projects#export_tabular_analysis_report", as: 'export_tabular_analysis_report'
+  get "/projects/:id/export_graphical_analysis_report", to: "projects#export_graphical_analysis_report", as: 'export_graphical_analysis_report'
 end
