@@ -61,6 +61,35 @@ class DashboardController < ApplicationController
     return redirect_to dashbaord_get_layer_weights_path(model_name: params[:model_name], operator: params[:operator], layer: params[:layer]), notice: response.values[0]
   end
 
+  def apply_mutation_score
+    @projects = current_user&.projects&.configured
+  end
+
+  def calculate_mutation_score
+    # TODO: what if only selected one project.
+    # TODO: Only Internel server error is returned from backed, no error text.
+    @err = false
+    unless params["analysis"]["project_ids"].nil?
+      @projects = Project.where(id: params["analysis"]["project_ids"])
+      k_vals = @projects.map(&:k_val)
+      k_vals = k_vals.map(&:to_i)
+      if k_vals.uniq.length == 1
+        # API Call
+        @mt_score = @backend_serice.calculate_mutation_score(@projects.pluck(:id).join('/'))
+        unless @mt_score.is_a?(Float)
+          @err_msg = @mt_score
+          @err = true
+        end     
+      else
+        @err_msg = "Please Select Projects with Same K Values."
+        @err = true
+      end
+    else
+      @err_msg = "Plese Select Some Projects First."
+      @err = true
+    end
+  end
+
   private
     def selected_analysis
       params.require(:analysis).permit(:specificity, :class_accuracy, :f1_score, :recall, :precision, :auc, :sensitivity, :accuracy, :f_beta, :fbeta_range)

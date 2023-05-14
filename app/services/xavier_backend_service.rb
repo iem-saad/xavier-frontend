@@ -64,6 +64,11 @@ class XavierBackendService < ApplicationService
     res = self.class.get("/run/#{p_id}", {read_timeout: 1000000})
   end
 
+  def calculate_mutation_score(p_ids)
+    res = self.class.get("/mutation_score/projects/#{p_ids}", {})
+    JSON.parse(res)
+  end
+
   def is_backend_live
     begin
       self.class.get("/", {})

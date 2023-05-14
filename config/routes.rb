@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get "dashbaord/compare_layer_weights/:model_name/:operator/:layer", to: "dashboard#compare_layer_weights", as: 'dashbaord_compare_layer_weights'
   post "dashbaord/put_layer_weights/:model_name/:operator/:layer", to: "dashboard#put_layer_weights", as: 'dashbaord_put_layer_weights'
   post 'submit_form', to: 'home#submit_form'
+  get "apply_mutation_score/:model_name/", to: "dashboard#apply_mutation_score", as: 'apply_mutation_score'
+  get "calculate_mutation_score/:model_name/", to: "dashboard#calculate_mutation_score", as: 'calculate_mutation_score'
+
 
   get "get_model_applicable_operator/:model_name", to: "projects#get_model_applicable_operator", as: 'get_model_applicable_operator'
   get "/projects/get_model_applicable_operator_names/:model_name/:operator", to: "projects#get_model_applicable_operator_names", as: 'get_model_applicable_operator_names'

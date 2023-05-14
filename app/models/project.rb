@@ -12,6 +12,10 @@ class Project < ApplicationRecord
   scope :unconfigured, -> { where(status: "unconfigured") }
   scope :configured, -> { where.not(status: "unconfigured") }
 
+  def k_val
+    self.hyper_params.dig("k_value")
+  end
+
   private def value_of_k
     if self.hyper_params.dig("k_value").nil? || self.hyper_params.dig("k_value").to_i <= 5
       errors.add :base, :invalid, message: "Value of K Must be present and greater than 5."

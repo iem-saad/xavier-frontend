@@ -1,0 +1,68 @@
+<% if @projects.any? %>
+<h3>Following are recently created Projects:</h3>
+<h6>For Calculating Mutation Score, Please make sure to select Projects with same K-Value. Else You will incur an Error!</h6>
+<div class="table-responsive bg-white">
+  <div class="row py-3">
+    <%= form_for :analysis, url: calculate_mutation_score_path(model_name: params[:model_name]), method: "GET", remote: true do |f| %>
+      <p>Please Select The Projects for which you want to calculate Mutation Score: </p>
+      <%= f.select :project_ids ,options_for_select(@projects.map {|project| [project.name, project.id]}, ' '), { include_hidden: false }, {class: 'select2 form-select w-100 my-5 ', required: true, multiple: true} %>
+      <%= f.submit "Calculate Score", class: 'btn btn-secondary my-2' %>
+    <% end %>
+  </div>
+  <table class="table align-items-center mb-0">
+    <thead>
+      <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">K-Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each_with_index do |project, index| %>
+        <tr>
+          <td class="align-middle">
+            <div class="form-check">
+              <%= project.name %>
+            </div>
+          </td>
+          <td class="text-xs font-weight-bold">
+            <%= project.description %>
+          </td>
+          <td class="align-middle text-center text-sm">
+            <span class="badge badge-sm bg-gradient-<%= project.completed? ? 'success' : 'secondary' %>"><%= project.status %> 
+            </span>
+          </td>
+          <td class="align-middle text-center">
+            <%= project.hyper_params.dig("k_value") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% else %>
+<h3>No Projects Found, Please Create a One.</h3>
+<% end %>
+
+<%= link_to "New project", new_project_path, class: "btn btn-secondary my-5" %>
+<script type="text/javascript">
+  $(".select2").select2({placeholder: 'Please select Projects'});
+</script>
+
+<div class="modal fade" id="mutationScoreModal" tabindex="-1" aria-labelledby="mutationScoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="mutationScoreModalLabel">Results For Mutation Score Calculation:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="mutation_score_modal_body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

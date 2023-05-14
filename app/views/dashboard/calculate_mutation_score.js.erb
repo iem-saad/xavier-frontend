@@ -1,0 +1,7 @@
+<% if @err %>
+  $('#mutation_score_modal_body').html("<%= j render(partial: 'mt_err', locals: {err: @err_msg}) %>");
+  $('#mutationScoreModal').modal('toggle');
+<% else %>
+  $('#mutation_score_modal_body').html("<%= j render(partial: 'mutation_score_body', locals: {score: @mt_score}) %>");
+  $('#mutationScoreModal').modal('toggle');
+<% end %>
