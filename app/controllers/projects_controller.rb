@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = current_user&.projects&.configured
+    @projects = current_user&.projects&.configured&.order(:id)
     @un_conf_projects = current_user&.projects&.unconfigured
     @failed_projects = current_user&.projects&.error
   end
