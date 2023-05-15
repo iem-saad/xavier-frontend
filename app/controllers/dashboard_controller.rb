@@ -76,6 +76,7 @@ class DashboardController < ApplicationController
       if k_vals.uniq.length == 1
         # API Call
         @mt_score = @backend_serice.calculate_mutation_score(@projects.pluck(:id).join('/'))
+        @k_val = k_vals.uniq.first
         unless @mt_score.is_a?(Float)
           @err_msg = @mt_score
           @err = true
