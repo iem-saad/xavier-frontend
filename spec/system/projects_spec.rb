@@ -4,6 +4,8 @@ require "rails_helper"
 
 RSpec.feature "Project Testing", type: :system do
   let(:user){ create(:user) }
+  let(:project_1){ create(:project) }
+  let(:project_2){ create(:project) }
 
   scenario "Successfully Create An unconfigured Project" do
     login(user)
@@ -69,5 +71,19 @@ RSpec.feature "Project Testing", type: :system do
     fill_in 'project[k_value]', with: 8
     click_on 'Proceed to Next Step'
     expect(Project.count).to eq 0
+  end
+
+  scenario "User shall be able to access mutation score page" do
+    login(user)
+    visit apply_mutation_score_path(model_name: "lenet5")
+
+    expect(page).to have_text "No Projects Found, Please Create a One."
+  end
+
+  scenario "User shall be able to access mutation analysis page" do
+    login(user)
+    visit mutation_analysis_path
+
+    expect(page).to have_text "No Projects Found, Please Create a One."
   end
 end
