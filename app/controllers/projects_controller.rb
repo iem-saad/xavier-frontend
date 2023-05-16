@@ -2,6 +2,8 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy select_layer select_mutant_location start_mutation_testing restart_mutation_testing ]
   before_action :set_op_type_dict
   skip_before_action :verify_authenticity_token, only: [:report_chart_assets]
+  layout 'pdf', only: [:export_tabular_analysis_report, :export_graphical_analysis_report]
+
 
   # GET /projects or /projects.json
   def index
@@ -110,19 +112,11 @@ class ProjectsController < ApplicationController
 
   def export_tabular_analysis_report
     @project = Project.find(params[:id])
-   
+    
     respond_to do |format|
-      format.pdf do
-        html_string = render_to_string({
-          template: 'projects/export_tabular_analysis_report',
-          locals: { :@project => @project }
-        })
-        style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
-        pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
-        send_data pdf, filename: "Project #{@project.name} Tabular Analysis Report " + Time.now.strftime('%v').to_s + ".pdf", type: "application/pdf"
-      end
       format.html do
-        render :export_tabular_analysis_report
+        BackendMailer.send_evaluation_report(@project, "tabular").deliver_later
+        return redirect_to project_path(@project), notice: "Evluation Report Exportation is in progress, you will recieve an email upon completion."
       end
     end
   end
@@ -131,17 +125,9 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
    
     respond_to do |format|
-      format.pdf do
-        html_string = render_to_string({
-          template: 'projects/export_graphical_analysis_report',
-          locals: { :@project => @project }
-        })
-        style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
-        pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
-        send_data pdf, filename: "Project #{@project.name} Graphical Analysis Report " + Time.now.strftime('%v').to_s + ".pdf", type: "application/pdf"
-      end
       format.html do
-        render :export_graphical_analysis_report
+        BackendMailer.send_evaluation_report(@project, "graphical").deliver_later
+        return redirect_to project_path(@project), notice: "Evluation Report Exportation is in progress, you will recieve an email upon completion."
       end
     end
   end

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi, <%= @project.user.email %>! Your Project <%= @project.name %>s Evaluation Report is ready, Please find it in attachment.</h1>
+    <h3>Status: <%= @project.reload.status %></h3>
+    <h3>Please Visit To Get more info regarding your project: <%= @link.html_safe %></h3>
+  </body>
+</html>
