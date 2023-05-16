@@ -1,3 +1,4 @@
+<% if @projects.any? %>
 <h3>Following are Available Projects for Mutation Analysis.</h3>
 <div class="table-responsive bg-white">
   <table class="table align-items-center mb-0">
@@ -16,3 +17,6 @@
     </tbody>
   </table>
 </div>
+<% else %>
+<h3>No Projects Found, Please Create a One.</h3>
+<% end %>
