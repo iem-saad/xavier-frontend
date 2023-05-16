@@ -119,7 +119,7 @@ class ProjectsController < ApplicationController
         })
         style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
         pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
-        send_data pdf, filename: "Project #{@project.name} Tabular Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
+        send_data pdf, filename: "Project #{@project.name} Tabular Analysis Report " + Time.now.strftime('%v').to_s + ".pdf", type: "application/pdf"
       end
       format.html do
         render :export_tabular_analysis_report
@@ -138,7 +138,7 @@ class ProjectsController < ApplicationController
         })
         style_tag_options = [{ url: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' }]
         pdf = Grover.new(html_string, format: 'A3', style_tag_options: style_tag_options).to_pdf
-        send_data pdf, filename: "Project #{@project.name} Graphical Analysis Report " + Time.now.strftime('%v').to_s, type: "application/pdf"
+        send_data pdf, filename: "Project #{@project.name} Graphical Analysis Report " + Time.now.strftime('%v').to_s + ".pdf", type: "application/pdf"
       end
       format.html do
         render :export_graphical_analysis_report
